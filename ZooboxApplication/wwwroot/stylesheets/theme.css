@@ -15309,8 +15309,8 @@ html.dark .invoice table.table > tbody tr > td {
 }
 .body-sign .center-sign {
 	display: table-cell;
-	padding-top: 20px;
-	vertical-align: middle;
+	padding-top: 100px;
+	/*vertical-align: middle;*/
 }
 .body-sign .panel-sign {
 	background: transparent;
