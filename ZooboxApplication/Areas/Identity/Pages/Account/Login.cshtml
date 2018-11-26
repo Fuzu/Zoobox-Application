@@ -23,19 +23,26 @@
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
-                            <input asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
+                    <div class="row">
+
+
+                        <div class="col-md-6 checkbox">
+                            <label asp-for="Input.RememberMe">
+                                <input asp-for="Input.RememberMe" />
+                                @Html.DisplayNameFor(m => m.Input.RememberMe)
+                            </label>
+                        </div>
+                        <div class="col-md-6 text-right" style="padding-top:10px">
+                            <a asp-page="./ForgotPassword">Esqueceu-se da password?</a>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <button id="submitButton"  type="submit" class="btn btn-default">Log in</button>
+                    <button type="submit" class="btn btn-warning col-md-12">Entrar</button>
                 </div>
                 <div class="form-group">
                     <p>
-                        <a id="forgotPassword" asp-page="./ForgotPassword">Forgot your password?</a>
+                        
                     </p>
                 </div>
             </form>

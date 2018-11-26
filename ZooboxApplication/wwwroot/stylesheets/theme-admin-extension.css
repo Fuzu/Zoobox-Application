@@ -2223,8 +2223,8 @@ html.dark .panel-body {
 }
 
 html.dark .panel-footer {
-	background: #242830;
-	border-top-color: #191c21;
+    background: #242830;
+    border-top-color: #2d2d2d;
 }
 
 html .panel-primary .panel-heading {

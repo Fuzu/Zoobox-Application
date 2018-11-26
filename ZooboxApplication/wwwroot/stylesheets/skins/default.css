@@ -49,8 +49,11 @@ a:active,
 	}
 }
 /* Userbox - Open */
-.userbox.open .dropdown-menu a:hover {
-	background: #0088cc;
+.userbox.open .dropdown-menu a:hover,
+.userbox.open .dropdown-menu .btn:hover {
+    background: #0088cc;
+    text-decoration: none;
+        color: white;
 }
 /* Mailbox */
 .mailbox .mailbox-mail-list li.active {
@@ -314,11 +317,11 @@ p.drop-caps.colored.secundary:first-child:first-letter {
 }
 /* Page Header */
 .page-header h2 {
-	border-bottom-color: #0088cc;
+    border-bottom-color: #ffd553;
 }
 
 .page-header .sidebar-right-toggle:hover {
-	color: #0088cc;
+	color: #cccccc;
 }
 /* Navigation */
 ul.nav-main > li.nav-active > a {
