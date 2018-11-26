@@ -1,3 +1,4 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -9,19 +10,27 @@ using Xunit;
 
 namespace TestExample
 {
+    [TestClass]
     public class UnitTest1
     {
 
         
-        [Fact]
+        [TestMethod]
         public void TestWithChromeDriver()
         {
             using (var driver = new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)))
             {
                 try
                 {
-                    driver.LoadPage(TimeSpan.FromSeconds(10), @"http://localhost:59461");
-                }catch (Exception e)
+                    driver.Navigate().GoToUrl("http://localhost:59461");
+
+                    IWebElement email = driver.FindElement(By.Id("emailInput"));
+                    email.SendKeys("Teste@test");
+
+                    var body = driver.FindElement(By.TagName("body")); // then you find the body
+
+                }
+                catch (Exception e)
                 {
 
                 }
