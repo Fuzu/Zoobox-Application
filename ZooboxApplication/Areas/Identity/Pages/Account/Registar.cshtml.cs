@@ -9,6 +9,10 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.DependencyInjection;
+using ZooboxApplication.Data;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ZooboxApplication.Areas.Identity.Pages.Account
 {
@@ -19,23 +23,37 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegistarModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
+
+
+
 
         public RegistarModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            ILogger<RegistarModel> logger,
+            ILogger<RegistarModel> logger, RoleManager<IdentityRole> roleManager,
             IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
+
+
         }
 
         [BindProperty]
         public InputModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
+
+        public List<SelectListItem> Roles { get; } = new List<SelectListItem>
+        {
+            new SelectListItem { Value = "Administrator", Text = "Administrador" },
+            new SelectListItem { Value = "Employe", Text = "Funcionário" },
+            new SelectListItem { Value = "Voluntary", Text = "Voluntário"  },
+        };
 
         public class InputModel
         {
@@ -54,6 +72,10 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+
+            [Display(Name = "Tipo de Utilizador")]
+            public string Role { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
@@ -63,6 +85,9 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            //var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+
+
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
@@ -81,6 +106,16 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    var existRole = await _roleManager.RoleExistsAsync(Input.Role);
+                    if (!existRole)
+                    {
+                        IdentityRole role = new IdentityRole();
+                        role.Name = Input.Role;
+                        await _roleManager.CreateAsync(role);
+                    }
+
+                    await _userManager.AddToRoleAsync(user, Input.Role);
 
                     //await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);

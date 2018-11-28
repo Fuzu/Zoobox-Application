@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ZooboxApplication.Areas.Identity.Pages.Account
 {
@@ -37,6 +38,13 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account
 
         public string ReturnUrl { get; set; }
 
+        public List<SelectListItem> Roles { get; } = new List<SelectListItem>
+        {
+            new SelectListItem { Value = "Administrator", Text = "Administrador" },
+            new SelectListItem { Value = "Employe", Text = "Funcionário" },
+            new SelectListItem { Value = "Voluntary", Text = "Voluntário"  },
+        };
+
         public class InputModel
         {
             [Required]
@@ -54,7 +62,12 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+          
+            [Display(Name = "Tipo de Utilizador")]
+            public string Role { get; set; }
         }
+
 
         public void OnGet(string returnUrl = null)
         {
