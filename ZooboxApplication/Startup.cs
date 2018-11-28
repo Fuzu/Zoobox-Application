@@ -1,4 +1,10 @@
-﻿using System;
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////
+// file:	Startup.cs
+//
+// summary:	Implements the startup class
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,16 +22,45 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace ZooboxApplication
 {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A startup. </summary>
+    ///
+    /// <remarks>   Diogo Paulino, 28/11/2018. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public class Startup
     {
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Constructor. </summary>
+        ///
+        /// <remarks>   Diogo Paulino, 28/11/2018. </remarks>
+        ///
+        /// <param name="configuration">    The configuration. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the configuration. </summary>
+        ///
+        /// <value> The configuration. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Configure services. </summary>
+        ///
+        /// <remarks>   Diogo Paulino, 28/11/2018. </remarks>
+        ///
+        /// <param name="services"> The services. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -68,6 +103,16 @@ namespace ZooboxApplication
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Configures. </summary>
+        ///
+        /// <remarks>   Diogo Paulino, 28/11/2018. </remarks>
+        ///
+        /// <param name="app">  The application. </param>
+        /// <param name="env">  The environment. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -94,8 +139,27 @@ namespace ZooboxApplication
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An email sender. </summary>
+        ///
+        /// <remarks>   Diogo Paulino, 28/11/2018. </remarks>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public class EmailSender : IEmailSender
         {
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
+            /// <summary>   Sends an email asynchronous. </summary>
+            ///
+            /// <remarks>   Diogo Paulino, 28/11/2018. </remarks>
+            ///
+            /// <param name="email">    The email. </param>
+            /// <param name="subject">  The subject. </param>
+            /// <param name="message">  The message. </param>
+            ///
+            /// <returns>   An asynchronous result. </returns>
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
+
             public Task SendEmailAsync(string email, string subject, string message)
             {
                 return Task.CompletedTask;
