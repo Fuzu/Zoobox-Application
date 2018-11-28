@@ -44,7 +44,7 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account.Manage
             public string Email { get; set; }
 
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Telemóvel")]
             public string PhoneNumber { get; set; }
         }
 
@@ -137,10 +137,10 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account.Manage
                 protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
                 email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                "Confirma o seu email",
+                $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Por favor confirma o teu email.</a>.");
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            StatusMessage = "Foi enviado com sucesso para o seu email.";
             return RedirectToPage();
         }
     }
