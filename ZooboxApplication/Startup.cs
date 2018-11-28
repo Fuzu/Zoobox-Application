@@ -19,6 +19,7 @@ using ZooboxApplication.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using MimeKit;
 
 namespace ZooboxApplication
 {
@@ -162,7 +163,24 @@ namespace ZooboxApplication
 
             public Task SendEmailAsync(string email, string subject, string message)
             {
-                return Task.CompletedTask;
+                var msg = new MimeMessage();
+                msg.From.Add(new MailboxAddress("Zoobox", "zoobox.app@gmail.com"));
+                msg.To.Add(new MailboxAddress(email, email));
+                msg.Subject = subject;
+                msg.Body = new TextPart("html")
+                {
+                    Text = message
+                };
+
+                using (var client = new MailKit.Net.Smtp.SmtpClient())
+                {
+                    client.Connect("smtp.gmail.com", 587, false);
+                    client.Authenticate("zoobox.app@gmail.com", "123456_Abc");
+                    client.Send(msg);
+                    client.Disconnect(true);
+                }
+
+                    return Task.CompletedTask;
             }
         }
     }

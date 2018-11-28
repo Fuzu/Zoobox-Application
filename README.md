@@ -1,5 +1,7 @@
 [logo]: https://zoobox.azurewebsites.net/images/logo.png
 [login]: https://i.imgur.com/8cetyyC.jpg
+[createUser]: https://i.imgur.com/fJpWP6Y.jpg
+[addTypeRole]: https://i.imgur.com/wZygQ0F.jpg
 # ![logo]
 
 
@@ -30,6 +32,14 @@ password: 123456_Abc
 ```
 ![login]
 
+Para criar um novo utilizador no sistema tem de ser um administrador do mesmo, depois ir ao menu de navegação e `Utilizadores > Registar`.
+Preencher os dados pretendidos para esse utilizador e fica criado.
+
+![createUser]
+
+Ir ao menu de navegação e `Utilizadores > Registar` se quiser mudar o tipo de um utilizador basta escrever o email do mesmo e colocar o tipo pretendido.
+
+![addTypeRole]
 
 ### Funcionalidades implementadas
 #### 1º Sprint

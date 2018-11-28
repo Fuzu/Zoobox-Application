@@ -38,7 +38,12 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(Input.Email);
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                //if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                //{
+                //    // Don't reveal that the user does not exist or is not confirmed
+                //    return RedirectToPage("./ForgotPasswordConfirmation");
+                //}
+                if (user == null)
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return RedirectToPage("./ForgotPasswordConfirmation");
@@ -55,8 +60,8 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account
 
                 await _emailSender.SendEmailAsync(
                     Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    "Reponha a Password",
+                    $"Por favor reponha a sua password <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicando aqui</a>.");
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
