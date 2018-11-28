@@ -37,6 +37,13 @@ namespace ZooboxApplication.Controllers
             return View();
         }
 
+        //public IActionResult AddRule()
+        //{
+        //    var RoleManager = _roleManager.RoleExistsAsync("Admin");
+      
+        //    return View();
+        //}
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
