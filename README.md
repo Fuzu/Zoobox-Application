@@ -57,7 +57,7 @@ Ir ao menu de navegação e `Utilizadores > Registar` se quiser mudar o tipo de um
 
 ```
 ####
-
+[Manual Técnico](https://zoobox.azurewebsites.net/help/index.html)
 
 ## Grupo X
 
