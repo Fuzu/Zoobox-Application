@@ -186,11 +186,47 @@ namespace ZooboxApplication.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("DiseaseID");
+
+                    b.Property<string>("Location");
+
                     b.Property<string>("Name");
+
+                    b.Property<int?>("raceID");
 
                     b.HasKey("ID");
 
+                    b.HasIndex("DiseaseID");
+
+                    b.HasIndex("raceID");
+
                     b.ToTable("Animal");
+                });
+
+            modelBuilder.Entity("ZooboxApplication.Models.Disease", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DiseaseName");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Disease");
+                });
+
+            modelBuilder.Entity("ZooboxApplication.Models.Race", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("RaceName");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Race");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -236,6 +272,17 @@ namespace ZooboxApplication.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ZooboxApplication.Models.Animal", b =>
+                {
+                    b.HasOne("ZooboxApplication.Models.Disease", "Disease")
+                        .WithMany()
+                        .HasForeignKey("DiseaseID");
+
+                    b.HasOne("ZooboxApplication.Models.Race", "race")
+                        .WithMany()
+                        .HasForeignKey("raceID");
                 });
 #pragma warning restore 612, 618
         }
