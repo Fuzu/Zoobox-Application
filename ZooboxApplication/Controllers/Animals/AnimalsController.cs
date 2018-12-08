@@ -54,7 +54,7 @@ namespace ZooboxApplication.Controllers
                 Value = a.Id.ToString(),
                 Text = a.RaceName
             }).ToList();
-            vm.DiseaseAnimal = _context.DiseaseAnimal.Select(a => new SelectListItem()
+            vm.Disease = _context.DiseaseAnimal.Select(a => new SelectListItem()
             {
                 Value = a.Id.ToString(),
                 Text = a.DiseaseName
