@@ -9,8 +9,8 @@ using ZooboxApplication.Data;
 namespace ZooboxApplication.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181208133832_Specie")]
-    partial class Specie
+    [Migration("20181208165015_IdChanges")]
+    partial class IdChanges
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -178,8 +178,10 @@ namespace ZooboxApplication.Data.Migrations
 
             modelBuilder.Entity("ZooboxApplication.Models.Animal", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Disease");
 
                     b.Property<DateTime>("EntranceDay");
 
@@ -187,63 +189,61 @@ namespace ZooboxApplication.Data.Migrations
 
                     b.Property<string>("Name");
 
-                    b.HasKey("ID");
+                    b.Property<int>("Race");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Disease");
+
+                    b.HasIndex("Race");
 
                     b.ToTable("Animal");
                 });
 
             modelBuilder.Entity("ZooboxApplication.Models.Animals.DiseaseAnimal", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("AnimalID");
 
                     b.Property<string>("DiseaseName");
 
-                    b.HasKey("ID");
-
-                    b.HasIndex("AnimalID");
+                    b.HasKey("Id");
 
                     b.ToTable("DiseaseAnimal");
                 });
 
             modelBuilder.Entity("ZooboxApplication.Models.Race", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("AnimalID");
 
                     b.Property<string>("RaceName");
 
-                    b.HasKey("ID");
-
-                    b.HasIndex("AnimalID");
+                    b.HasKey("Id");
 
                     b.ToTable("Race");
                 });
 
             modelBuilder.Entity("ZooboxApplication.Models.Specie", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("SpecieName");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Specie");
                 });
 
             modelBuilder.Entity("ZooboxApplication.Models.State", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("StateName");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("State");
                 });
@@ -293,18 +293,17 @@ namespace ZooboxApplication.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ZooboxApplication.Models.Animals.DiseaseAnimal", b =>
+            modelBuilder.Entity("ZooboxApplication.Models.Animal", b =>
                 {
-                    b.HasOne("ZooboxApplication.Models.Animal")
-                        .WithMany("Disease")
-                        .HasForeignKey("AnimalID");
-                });
+                    b.HasOne("ZooboxApplication.Models.Animals.DiseaseAnimal", "DiseaseName")
+                        .WithMany()
+                        .HasForeignKey("Disease")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity("ZooboxApplication.Models.Race", b =>
-                {
-                    b.HasOne("ZooboxApplication.Models.Animal")
-                        .WithMany("Race")
-                        .HasForeignKey("AnimalID");
+                    b.HasOne("ZooboxApplication.Models.Race", "RaceName")
+                        .WithMany()
+                        .HasForeignKey("Race")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

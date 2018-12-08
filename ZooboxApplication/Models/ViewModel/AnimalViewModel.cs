@@ -9,7 +9,7 @@ namespace ZooboxApplication.Models.ViewModel
 {
     public class AnimalViewModel
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Nome")]
         public String Name { get; set; }

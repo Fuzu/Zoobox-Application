@@ -176,7 +176,7 @@ namespace ZooboxApplication.Data.Migrations
 
             modelBuilder.Entity("ZooboxApplication.Models.Animal", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("Disease");
@@ -189,7 +189,7 @@ namespace ZooboxApplication.Data.Migrations
 
                     b.Property<int>("Race");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("Disease");
 
@@ -200,48 +200,48 @@ namespace ZooboxApplication.Data.Migrations
 
             modelBuilder.Entity("ZooboxApplication.Models.Animals.DiseaseAnimal", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("DiseaseName");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("DiseaseAnimal");
                 });
 
             modelBuilder.Entity("ZooboxApplication.Models.Race", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("RaceName");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Race");
                 });
 
             modelBuilder.Entity("ZooboxApplication.Models.Specie", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("SpecieName");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Specie");
                 });
 
             modelBuilder.Entity("ZooboxApplication.Models.State", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("StateName");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("State");
                 });
