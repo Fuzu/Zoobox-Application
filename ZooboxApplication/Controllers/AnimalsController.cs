@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ZooboxApplication.Data;
 using ZooboxApplication.Models;
+using ZooboxApplication.Models.ViewModel;
 
 namespace ZooboxApplication.Controllers
 {
@@ -46,7 +47,14 @@ namespace ZooboxApplication.Controllers
         // GET: Animals/Create
         public IActionResult Create()
         {
-            return View();
+            var vm = new AnimalViewModel();
+           vm.Race = _context.Race.Select(a => new SelectListItem()
+            {
+                Value = a.ID.ToString(),
+                Text = a.RaceName
+            }).ToList();
+
+        return View(vm);
         }
 
         // POST: Animals/Create
@@ -54,10 +62,10 @@ namespace ZooboxApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name")] Animal animal)
+        public async Task<IActionResult> Create([Bind("ID,Name,Location,EntranceDay,Race")] Animal animal)
         {
             if (ModelState.IsValid)
-            {
+            {   
                 _context.Add(animal);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -86,7 +94,7 @@ namespace ZooboxApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] Animal animal)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Location,EntranceDay")] Animal animal)
         {
             if (id != animal.ID)
             {

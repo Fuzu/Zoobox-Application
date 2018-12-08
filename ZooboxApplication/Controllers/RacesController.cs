@@ -33,14 +33,15 @@ namespace ZooboxApplication.Controllers
                 return NotFound();
             }
 
-            var race = await _context.Race
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (race == null)
-            {
-                return NotFound();
-            }
+             var race = await _context.Race
+                 .FirstOrDefaultAsync(m => m.ID == id);
+             if (race == null)
+             {
+                 return NotFound();
+             }
 
-            return View(race);
+             return View(race);
+
         }
 
         // GET: Races/Create
@@ -123,7 +124,7 @@ namespace ZooboxApplication.Controllers
             {
                 return NotFound();
             }
-
+            
             var race = await _context.Race
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (race == null)
@@ -147,7 +148,8 @@ namespace ZooboxApplication.Controllers
 
         private bool RaceExists(int id)
         {
-            return _context.Race.Any(e => e.ID == id);
+             return _context.Race.Any(e => e.ID == id);
+      
         }
     }
 }

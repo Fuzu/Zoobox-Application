@@ -1,19 +1,25 @@
 ﻿@model IEnumerable<ZooboxApplication.Models.Animal>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Animais";
 }
 
-<h2>Index</h2>
+<h2>Animais</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Registar Novo</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EntranceDay)
             </th>
             <th></th>
         </tr>
@@ -25,9 +31,15 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EntranceDay)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Info</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Eliminar</a>
             </td>
         </tr>
 }

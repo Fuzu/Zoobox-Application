@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ZooboxApplication.Models
+namespace ZooboxApplication.Models.ViewModel
 {
-    public class Animal 
+    public class AnimalViewModel
     {
         public int ID { get; set; }
 
@@ -15,7 +15,7 @@ namespace ZooboxApplication.Models
         public String Name { get; set; }
 
         [Display(Name = "Raça")]
-        public IEnumerable<Race> Race { get; set; }
+        public List<SelectListItem> Race { get; set; }
 
         [Display(Name = "Localização no Canil")]
         public String Location { get; set; }
@@ -25,8 +25,5 @@ namespace ZooboxApplication.Models
 
         [DisplayFormat(DataFormatString = "{MM/dd/yyyy}")]
         public DateTime EntranceDay { get; set; }
-
-
-
     }
 }
