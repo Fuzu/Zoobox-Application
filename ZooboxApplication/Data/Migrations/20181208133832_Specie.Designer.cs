@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZooboxApplication.Data;
 
 namespace ZooboxApplication.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181208133832_Specie")]
+    partial class Specie
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -179,21 +181,13 @@ namespace ZooboxApplication.Data.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("Disease");
-
                     b.Property<DateTime>("EntranceDay");
 
                     b.Property<string>("Location");
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("Race");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("Disease");
-
-                    b.HasIndex("Race");
 
                     b.ToTable("Animal");
                 });
@@ -203,9 +197,13 @@ namespace ZooboxApplication.Data.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("AnimalID");
+
                     b.Property<string>("DiseaseName");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("AnimalID");
 
                     b.ToTable("DiseaseAnimal");
                 });
@@ -215,9 +213,13 @@ namespace ZooboxApplication.Data.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("AnimalID");
+
                     b.Property<string>("RaceName");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("AnimalID");
 
                     b.ToTable("Race");
                 });
@@ -291,17 +293,18 @@ namespace ZooboxApplication.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ZooboxApplication.Models.Animal", b =>
+            modelBuilder.Entity("ZooboxApplication.Models.Animals.DiseaseAnimal", b =>
                 {
-                    b.HasOne("ZooboxApplication.Models.Animals.DiseaseAnimal", "DiseaseName")
-                        .WithMany()
-                        .HasForeignKey("Disease")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("ZooboxApplication.Models.Animal")
+                        .WithMany("Disease")
+                        .HasForeignKey("AnimalID");
+                });
 
-                    b.HasOne("ZooboxApplication.Models.Race", "RaceName")
-                        .WithMany()
-                        .HasForeignKey("Race")
-                        .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity("ZooboxApplication.Models.Race", b =>
+                {
+                    b.HasOne("ZooboxApplication.Models.Animal")
+                        .WithMany("Race")
+                        .HasForeignKey("AnimalID");
                 });
 #pragma warning restore 612, 618
         }

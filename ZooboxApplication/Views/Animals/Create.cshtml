@@ -30,7 +30,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="Race" class="control-label"></label>
-                <select asp-for="ID" asp-items="@Model.Race" class="form-control"  >
+                <select asp-for="ID" asp-items="@Model.Race" class="form-control">
+                    <option>Seleccione um</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiseaseAnimal" class="control-label"></label>
+                <select asp-for="ID" asp-items="@Model.DiseaseAnimal" class="form-control">
                     <option>Seleccione um</option>
                 </select>
             </div>

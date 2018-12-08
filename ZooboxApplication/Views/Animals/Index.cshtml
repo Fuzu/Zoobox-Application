@@ -21,6 +21,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.EntranceDay)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiseaseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Race)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -36,10 +42,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EntranceDay)
             </td>
+            <th>s
+                @Html.DisplayFor(modelItem => item.DiseaseName)
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.RaceName)
+            </th>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.ID">Info</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Eliminar</a>
+                <a asp-action="Delete" asp-route-id="@item.ID"><span class="glyphicon glyphicon-trash"></span></a>
+
             </td>
         </tr>
 }

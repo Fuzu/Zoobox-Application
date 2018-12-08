@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZooboxApplication.Data;
@@ -10,16 +9,15 @@ using ZooboxApplication.Data;
 namespace ZooboxApplication.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181208095035_Diseases")]
-    partial class Diseases
+    [Migration("20181208154545_Animal")]
+    partial class Animal
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -39,8 +37,7 @@ namespace ZooboxApplication.Data.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -48,8 +45,7 @@ namespace ZooboxApplication.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -110,8 +106,7 @@ namespace ZooboxApplication.Data.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -119,8 +114,7 @@ namespace ZooboxApplication.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -185,10 +179,9 @@ namespace ZooboxApplication.Data.Migrations
             modelBuilder.Entity("ZooboxApplication.Models.Animal", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("DiseaseID");
+                    b.Property<int>("Disease");
 
                     b.Property<DateTime>("EntranceDay");
 
@@ -196,39 +189,37 @@ namespace ZooboxApplication.Data.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int>("Race");
+
                     b.HasKey("ID");
 
-                    b.HasIndex("DiseaseID");
+                    b.HasIndex("Disease");
+
+                    b.HasIndex("Race");
 
                     b.ToTable("Animal");
                 });
 
-            modelBuilder.Entity("ZooboxApplication.Models.Disease", b =>
+            modelBuilder.Entity("ZooboxApplication.Models.Animals.DiseaseAnimal", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("DiseaseName");
 
                     b.HasKey("ID");
 
-                    b.ToTable("Disease");
+                    b.ToTable("DiseaseAnimal");
                 });
 
             modelBuilder.Entity("ZooboxApplication.Models.Race", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AnimalID");
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("RaceName");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("AnimalID");
 
                     b.ToTable("Race");
                 });
@@ -236,8 +227,7 @@ namespace ZooboxApplication.Data.Migrations
             modelBuilder.Entity("ZooboxApplication.Models.Specie", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("SpecieName");
 
@@ -249,8 +239,7 @@ namespace ZooboxApplication.Data.Migrations
             modelBuilder.Entity("ZooboxApplication.Models.State", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("StateName");
 
@@ -306,16 +295,15 @@ namespace ZooboxApplication.Data.Migrations
 
             modelBuilder.Entity("ZooboxApplication.Models.Animal", b =>
                 {
-                    b.HasOne("ZooboxApplication.Models.Disease", "Disease")
+                    b.HasOne("ZooboxApplication.Models.Animals.DiseaseAnimal", "DiseaseName")
                         .WithMany()
-                        .HasForeignKey("DiseaseID");
-                });
+                        .HasForeignKey("Disease")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity("ZooboxApplication.Models.Race", b =>
-                {
-                    b.HasOne("ZooboxApplication.Models.Animal")
-                        .WithMany("Race")
-                        .HasForeignKey("AnimalID");
+                    b.HasOne("ZooboxApplication.Models.Race", "RaceName")
+                        .WithMany()
+                        .HasForeignKey("Race")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

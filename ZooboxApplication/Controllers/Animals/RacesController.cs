@@ -10,22 +10,22 @@ using ZooboxApplication.Models;
 
 namespace ZooboxApplication.Controllers
 {
-    public class StatesController : Controller
+    public class RacesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public StatesController(ApplicationDbContext context)
+        public RacesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: States
+        // GET: Races
         public async Task<IActionResult> Index()
         {
-            return View(await _context.State.ToListAsync());
+            return View(await _context.Race.ToListAsync());
         }
 
-        // GET: States/Details/5
+        // GET: Races/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,40 @@ namespace ZooboxApplication.Controllers
                 return NotFound();
             }
 
-            var state = await _context.State
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (state == null)
-            {
-                return NotFound();
-            }
+             var race = await _context.Race
+                 .FirstOrDefaultAsync(m => m.Id == id);
+             if (race == null)
+             {
+                 return NotFound();
+             }
 
-            return View(state);
+             return View(race);
+
         }
 
-        // GET: States/Create
+        // GET: Races/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: States/Create
+        // POST: Races/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,StateName")] State state)
+        public async Task<IActionResult> Create([Bind("ID,RaceName")] Race race)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(state);
+                _context.Add(race);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(state);
+            return View(race);
         }
 
-        // GET: States/Edit/5
+        // GET: Races/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +74,22 @@ namespace ZooboxApplication.Controllers
                 return NotFound();
             }
 
-            var state = await _context.State.FindAsync(id);
-            if (state == null)
+            var race = await _context.Race.FindAsync(id);
+            if (race == null)
             {
                 return NotFound();
             }
-            return View(state);
+            return View(race);
         }
 
-        // POST: States/Edit/5
+        // POST: Races/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,StateName")] State state)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,RaceName")] Race race)
         {
-            if (id != state.ID)
+            if (id != race.Id)
             {
                 return NotFound();
             }
@@ -97,12 +98,12 @@ namespace ZooboxApplication.Controllers
             {
                 try
                 {
-                    _context.Update(state);
+                    _context.Update(race);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StateExists(state.ID))
+                    if (!RaceExists(race.Id))
                     {
                         return NotFound();
                     }
@@ -113,41 +114,42 @@ namespace ZooboxApplication.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(state);
+            return View(race);
         }
 
-        // GET: States/Delete/5
+        // GET: Races/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var state = await _context.State
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (state == null)
+            
+            var race = await _context.Race
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (race == null)
             {
                 return NotFound();
             }
 
-            return View(state);
+            return View(race);
         }
 
-        // POST: States/Delete/5
+        // POST: Races/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var state = await _context.State.FindAsync(id);
-            _context.State.Remove(state);
+            var race = await _context.Race.FindAsync(id);
+            _context.Race.Remove(race);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StateExists(int id)
+        private bool RaceExists(int id)
         {
-            return _context.State.Any(e => e.ID == id);
+             return _context.Race.Any(e => e.Id == id);
+      
         }
     }
 }

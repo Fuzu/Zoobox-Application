@@ -8,7 +8,7 @@ namespace ZooboxApplication.Models
 {
     public class Specie
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         [Display(Name = "Nome da especie animal")]
         public String SpecieName { get; set; }
 

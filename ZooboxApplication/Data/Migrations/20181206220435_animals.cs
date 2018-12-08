@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace ZooboxApplication.Data.Migrations
 {
@@ -41,7 +42,12 @@ namespace ZooboxApplication.Data.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Race = table.Column<int>(nullable:false),
+                    Disease = table.Column<int>(nullable:false),
+                    EntranceDay= table.Column<DateTime>(nullable:false),
+                    location = table.Column<string>(nullable:false)
+
                 },
                 constraints: table =>
                 {

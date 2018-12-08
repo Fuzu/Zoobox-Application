@@ -2,7 +2,7 @@
 
 namespace ZooboxApplication.Data.Migrations
 {
-    public partial class Diseases : Migration
+    public partial class Specie : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

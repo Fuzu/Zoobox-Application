@@ -21,7 +21,7 @@ namespace ZooboxApplication.Models.ViewModel
         public String Location { get; set; }
 
         [Display(Name = "Doença")]
-        public Disease Disease { get; set; }
+        public List<SelectListItem> DiseaseAnimal { get; set; }
 
         [DisplayFormat(DataFormatString = "{MM/dd/yyyy}")]
         public DateTime EntranceDay { get; set; }

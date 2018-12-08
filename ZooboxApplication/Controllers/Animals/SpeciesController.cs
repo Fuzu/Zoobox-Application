@@ -10,86 +10,85 @@ using ZooboxApplication.Models;
 
 namespace ZooboxApplication.Controllers
 {
-    public class RacesController : Controller
+    public class SpeciesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public RacesController(ApplicationDbContext context)
+        public SpeciesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Races
+        // GET: Species
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Race.ToListAsync());
+            return View(await _context.Specie.ToListAsync());
         }
 
-        // GET: Races/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Species/Details/5
+        public async Task<IActionResult> Details(int? Id)
         {
-            if (id == null)
+            if (Id == null)
             {
                 return NotFound();
             }
 
-             var race = await _context.Race
-                 .FirstOrDefaultAsync(m => m.ID == id);
-             if (race == null)
-             {
-                 return NotFound();
-             }
+            var specie = await _context.Specie
+                .FirstOrDefaultAsync(m => m.Id == Id);
+            if (specie == null)
+            {
+                return NotFound();
+            }
 
-             return View(race);
-
+            return View(specie);
         }
 
-        // GET: Races/Create
+        // GET: Species/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Races/Create
+        // POST: Species/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,RaceName")] Race race)
+        public async Task<IActionResult> Create([Bind("Id,SpecieName")] Specie specie)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(race);
+                _context.Add(specie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(race);
+            return View(specie);
         }
 
-        // GET: Races/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: Species/Edit/5
+        public async Task<IActionResult> Edit(int? Id)
         {
-            if (id == null)
+            if (Id == null)
             {
                 return NotFound();
             }
 
-            var race = await _context.Race.FindAsync(id);
-            if (race == null)
+            var specie = await _context.Specie.FindAsync(Id);
+            if (specie == null)
             {
                 return NotFound();
             }
-            return View(race);
+            return View(specie);
         }
 
-        // POST: Races/Edit/5
+        // POST: Species/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,RaceName")] Race race)
+        public async Task<IActionResult> Edit(int Id, [Bind("Id,SpecieName")] Specie specie)
         {
-            if (id != race.ID)
+            if (Id != specie.Id)
             {
                 return NotFound();
             }
@@ -98,12 +97,12 @@ namespace ZooboxApplication.Controllers
             {
                 try
                 {
-                    _context.Update(race);
+                    _context.Update(specie);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RaceExists(race.ID))
+                    if (!SpecieExists(specie.Id))
                     {
                         return NotFound();
                     }
@@ -114,42 +113,41 @@ namespace ZooboxApplication.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(race);
+            return View(specie);
         }
 
-        // GET: Races/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: Species/Delete/5
+        public async Task<IActionResult> Delete(int? Id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            
-            var race = await _context.Race
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (race == null)
+            if (Id == null)
             {
                 return NotFound();
             }
 
-            return View(race);
+            var specie = await _context.Specie
+                .FirstOrDefaultAsync(m => m.Id == Id);
+            if (specie == null)
+            {
+                return NotFound();
+            }
+
+            return View(specie);
         }
 
-        // POST: Races/Delete/5
+        // POST: Species/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int Id)
         {
-            var race = await _context.Race.FindAsync(id);
-            _context.Race.Remove(race);
+            var specie = await _context.Specie.FindAsync(Id);
+            _context.Specie.Remove(specie);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RaceExists(int id)
+        private bool SpecieExists(int Id)
         {
-             return _context.Race.Any(e => e.ID == id);
-      
+            return _context.Specie.Any(e => e.Id == Id);
         }
     }
 }

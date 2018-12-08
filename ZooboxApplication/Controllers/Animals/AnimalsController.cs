@@ -7,25 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ZooboxApplication.Data;
 using ZooboxApplication.Models;
+using ZooboxApplication.Models.ViewModel;
 
 namespace ZooboxApplication.Controllers
 {
-    public class SpeciesController : Controller
+    public class AnimalsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public SpeciesController(ApplicationDbContext context)
+        public AnimalsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Species
+        // GET: Animals
         public async Task<IActionResult> Index()
-        {
-            return View(await _context.Specie.ToListAsync());
+        {            
+            
+            return View(await _context.Animal.ToListAsync());
         }
 
-        // GET: Species/Details/5
+        // GET: Animals/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +35,51 @@ namespace ZooboxApplication.Controllers
                 return NotFound();
             }
 
-            var specie = await _context.Specie
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (specie == null)
+            var animal = await _context.Animal
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (animal == null)
             {
                 return NotFound();
             }
 
-            return View(specie);
+            return View(animal);
         }
 
-        // GET: Species/Create
+        // GET: Animals/Create
         public IActionResult Create()
         {
-            return View();
+            var vm = new AnimalViewModel();
+           vm.Race = _context.Race.Select(a => new SelectListItem()
+            {
+                Value = a.Id.ToString(),
+                Text = a.RaceName
+            }).ToList();
+            vm.DiseaseAnimal = _context.DiseaseAnimal.Select(a => new SelectListItem()
+            {
+                Value = a.Id.ToString(),
+                Text = a.DiseaseName
+            }).ToList();
+
+        return View(vm);
         }
 
-        // POST: Species/Create
+        // POST: Animals/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,SpecieName")] Specie specie)
+        public async Task<IActionResult> Create([Bind("ID,Name,Location,EntranceDay,Race,Disease")] Animal animal)
         {
             if (ModelState.IsValid)
-            {
-                _context.Add(specie);
+            {   
+                _context.Add(animal);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(specie);
+            return View(animal);
         }
 
-        // GET: Species/Edit/5
+        // GET: Animals/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +87,22 @@ namespace ZooboxApplication.Controllers
                 return NotFound();
             }
 
-            var specie = await _context.Specie.FindAsync(id);
-            if (specie == null)
+            var animal = await _context.Animal.FindAsync(id);
+            if (animal == null)
             {
                 return NotFound();
             }
-            return View(specie);
+            return View(animal);
         }
 
-        // POST: Species/Edit/5
+        // POST: Animals/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,SpecieName")] Specie specie)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Location,EntranceDay,Race,DiseaseName")] Animal animal)
         {
-            if (id != specie.ID)
+            if (id != animal.Id)
             {
                 return NotFound();
             }
@@ -97,12 +111,12 @@ namespace ZooboxApplication.Controllers
             {
                 try
                 {
-                    _context.Update(specie);
+                    _context.Update(animal);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SpecieExists(specie.ID))
+                    if (!AnimalExists(animal.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +127,10 @@ namespace ZooboxApplication.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(specie);
+            return View(animal);
         }
 
-        // GET: Species/Delete/5
+        // GET: Animals/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +138,30 @@ namespace ZooboxApplication.Controllers
                 return NotFound();
             }
 
-            var specie = await _context.Specie
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (specie == null)
+            var animal = await _context.Animal
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (animal == null)
             {
                 return NotFound();
             }
 
-            return View(specie);
+            return View(animal);
         }
 
-        // POST: Species/Delete/5
+        // POST: Animals/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var specie = await _context.Specie.FindAsync(id);
-            _context.Specie.Remove(specie);
+            var animal = await _context.Animal.FindAsync(id);
+            _context.Animal.Remove(animal);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SpecieExists(int id)
+        private bool AnimalExists(int id)
         {
-            return _context.Specie.Any(e => e.ID == id);
+            return _context.Animal.Any(e => e.Id == id);
         }
     }
 }

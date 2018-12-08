@@ -4,11 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ZooboxApplication.Models
+namespace ZooboxApplication.Models.Animals
 {
-    public class Disease
+    public class DiseaseAnimal
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
+
         [Display(Name = "Nome da doença")]
         public String DiseaseName { get; set; }
     }

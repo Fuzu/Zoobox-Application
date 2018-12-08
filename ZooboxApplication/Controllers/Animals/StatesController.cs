@@ -10,22 +10,22 @@ using ZooboxApplication.Models;
 
 namespace ZooboxApplication.Controllers
 {
-    public class DiseasesController : Controller
+    public class StatesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public DiseasesController(ApplicationDbContext context)
+        public StatesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Diseases
+        // GET: States
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Disease.ToListAsync());
+            return View(await _context.State.ToListAsync());
         }
 
-        // GET: Diseases/Details/5
+        // GET: States/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace ZooboxApplication.Controllers
                 return NotFound();
             }
 
-            var disease = await _context.Disease
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (disease == null)
+            var state = await _context.State
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (state == null)
             {
                 return NotFound();
             }
 
-            return View(disease);
+            return View(state);
         }
 
-        // GET: Diseases/Create
+        // GET: States/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Diseases/Create
+        // POST: States/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,DiseaseName")] Disease disease)
+        public async Task<IActionResult> Create([Bind("ID,StateName")] State state)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(disease);
+                _context.Add(state);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(disease);
+            return View(state);
         }
 
-        // GET: Diseases/Edit/5
+        // GET: States/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace ZooboxApplication.Controllers
                 return NotFound();
             }
 
-            var disease = await _context.Disease.FindAsync(id);
-            if (disease == null)
+            var state = await _context.State.FindAsync(id);
+            if (state == null)
             {
                 return NotFound();
             }
-            return View(disease);
+            return View(state);
         }
 
-        // POST: Diseases/Edit/5
+        // POST: States/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,DiseaseName")] Disease disease)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,StateName")] State state)
         {
-            if (id != disease.ID)
+            if (id != state.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace ZooboxApplication.Controllers
             {
                 try
                 {
-                    _context.Update(disease);
+                    _context.Update(state);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DiseaseExists(disease.ID))
+                    if (!StateExists(state.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace ZooboxApplication.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(disease);
+            return View(state);
         }
 
-        // GET: Diseases/Delete/5
+        // GET: States/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace ZooboxApplication.Controllers
                 return NotFound();
             }
 
-            var disease = await _context.Disease
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (disease == null)
+            var state = await _context.State
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (state == null)
             {
                 return NotFound();
             }
 
-            return View(disease);
+            return View(state);
         }
 
-        // POST: Diseases/Delete/5
+        // POST: States/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var disease = await _context.Disease.FindAsync(id);
-            _context.Disease.Remove(disease);
+            var state = await _context.State.FindAsync(id);
+            _context.State.Remove(state);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DiseaseExists(int id)
+        private bool StateExists(int id)
         {
-            return _context.Disease.Any(e => e.ID == id);
+            return _context.State.Any(e => e.Id == id);
         }
     }
 }
