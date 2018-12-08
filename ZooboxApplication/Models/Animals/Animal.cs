@@ -16,17 +16,21 @@ namespace ZooboxApplication.Models
         [Display(Name = "Nome")]
         public String Name { get; set; }
 
+        public int Race { get; set; }
+
         [ForeignKey("Race")]
         [Display(Name = "Raça")]
-        public virtual Race RaceName { get; set; }
+        public Race RaceName { get; set; }
 
-        public virtual int Race { get; set; }
+
+ 
+        public int Disease { get; set; }
 
         [ForeignKey("Disease")]
         [Display(Name = "Doença")]
-        public virtual DiseaseAnimal DiseaseName { get; set; }
+        public DiseaseAnimal DiseaseName { get; set; }
 
-        public virtual int Disease { get; set; }
+
 
 
         [DisplayFormat(DataFormatString = "{0:d}")]
