@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZooboxApplication.Data;
 
-namespace ZooboxApplication.Data.Migrations
+namespace ZooboxApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181208220045_FK2")]
-    partial class FK2
+    [Migration("20181209190219_initialCommit")]
+    partial class initialCommit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

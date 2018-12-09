@@ -2,17 +2,15 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZooboxApplication.Data;
 
-namespace ZooboxApplication.Data.Migrations
+namespace ZooboxApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181208154545_Animal")]
-    partial class Animal
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,7 +176,7 @@ namespace ZooboxApplication.Data.Migrations
 
             modelBuilder.Entity("ZooboxApplication.Models.Animal", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("Disease");
@@ -191,7 +189,7 @@ namespace ZooboxApplication.Data.Migrations
 
                     b.Property<int>("Race");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("Disease");
 
@@ -202,48 +200,48 @@ namespace ZooboxApplication.Data.Migrations
 
             modelBuilder.Entity("ZooboxApplication.Models.Animals.DiseaseAnimal", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("DiseaseName");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("DiseaseAnimal");
                 });
 
             modelBuilder.Entity("ZooboxApplication.Models.Race", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("RaceName");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Race");
                 });
 
             modelBuilder.Entity("ZooboxApplication.Models.Specie", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("SpecieName");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Specie");
                 });
 
             modelBuilder.Entity("ZooboxApplication.Models.State", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("StateName");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("State");
                 });
