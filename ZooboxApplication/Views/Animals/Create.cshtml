@@ -1,11 +1,10 @@
-﻿@model ZooboxApplication.Models.ViewModel.AnimalViewModel
-
+﻿@model ZooboxApplication.Models.Animal
 
 @{
-    ViewData["Title"] = "Registar Animal";
+    ViewData["Title"] = "Criar novo animal";
 }
 
-<h2>Registar Animal</h2>
+<h2>Criar novo animal</h2>
 
 <h4>Animal</h4>
 <hr />
@@ -19,9 +18,12 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Location" class="control-label"></label>
-                <input asp-for="Location" class="form-control" />
-                <span asp-validation-for="Location" class="text-danger"></span>
+                <label asp-for="Race" class="control-label"></label>
+                <select asp-for="Race" class ="form-control" asp-items="ViewBag.Race"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Disease" class="control-label"></label>
+                <select asp-for="Disease" class ="form-control" asp-items="ViewBag.Disease"></select>
             </div>
             <div class="form-group">
                 <label asp-for="EntranceDay" class="control-label"></label>
@@ -29,30 +31,20 @@
                 <span asp-validation-for="EntranceDay" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Race" class="control-label"></label>
-                <select asp-for="Race" asp-items="@Model.Race" class="form-control">
-                    <option>Seleccione um</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Disease" class="control-label"></label>
-                <select asp-for="Disease" asp-items="@Model.Disease" class="form-control">
-                    <option>Seleccione um</option>
-                </select>
+                <label asp-for="Location" class="control-label"></label>
+                <input asp-for="Location" class="form-control" />
+                <span asp-validation-for="Location" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="State" class="control-label"></label>
-                <select asp-for="State" asp-items="@Model.State" class="form-control">
-                    <option>Seleccione um</option>
-                </select>
+                <select asp-for="State" class ="form-control" asp-items="ViewBag.State"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Registar" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

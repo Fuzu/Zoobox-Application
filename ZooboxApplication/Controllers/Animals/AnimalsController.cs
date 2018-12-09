@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ZooboxApplication.Data;
 using ZooboxApplication.Models;
-using ZooboxApplication.Models.ViewModel;
 
-namespace ZooboxApplication.Controllers
+namespace ZooboxApplication.Controllers.Animals
 {
-    [Authorize]
     public class AnimalsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,8 +22,8 @@ namespace ZooboxApplication.Controllers
         // GET: Animals
         public async Task<IActionResult> Index()
         {
-
-            return View(await _context.Animal.ToListAsync());
+            var applicationDbContext = _context.Animal.Include(a => a.DiseaseName).Include(a => a.RaceName).Include(a => a.Statename);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Animals/Details/5
@@ -38,6 +35,9 @@ namespace ZooboxApplication.Controllers
             }
 
             var animal = await _context.Animal
+                .Include(a => a.DiseaseName)
+                .Include(a => a.RaceName)
+                .Include(a => a.Statename)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (animal == null)
             {
@@ -50,29 +50,10 @@ namespace ZooboxApplication.Controllers
         // GET: Animals/Create
         public IActionResult Create()
         {
-            var vm = new AnimalViewModel
-            {
-                Race = _context.Race.Select(a => new SelectListItem()
-                {
-                    Value = a.Id.ToString(),
-                    Text = a.RaceName
-                }).ToList(),
-
-                Disease = _context.DiseaseAnimal.Select(a => new SelectListItem()
-                {
-                    Value = a.Id.ToString(),
-                    Text = a.DiseaseName
-                }).ToList(),
-
-                State = _context.State.Select(a => new SelectListItem()
-                {
-                    Value = a.Id.ToString(),
-                    Text = a.StateName
-                }).ToList()
-            };
-
-            
-        return View(vm);
+            ViewData["Disease"] = new SelectList(_context.DiseaseAnimal, "Id", "DiseaseName");
+            ViewData["Race"] = new SelectList(_context.Race, "Id", "RaceName");
+            ViewData["State"] = new SelectList(_context.State, "Id", "StateName");
+            return View();
         }
 
         // POST: Animals/Create
@@ -80,14 +61,17 @@ namespace ZooboxApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Location,EntranceDay,Race,Disease,State")] Animal animal)
+        public async Task<IActionResult> Create([Bind("Id,Name,Race,Disease,EntranceDay,Location,State")] Animal animal)
         {
             if (ModelState.IsValid)
-            {   
+            {
                 _context.Add(animal);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Disease"] = new SelectList(_context.DiseaseAnimal, "Id", "Id", animal.Disease);
+            ViewData["Race"] = new SelectList(_context.Race, "Id", "Id", animal.Race);
+            ViewData["State"] = new SelectList(_context.State, "Id", "Id", animal.State);
             return View(animal);
         }
 
@@ -104,6 +88,9 @@ namespace ZooboxApplication.Controllers
             {
                 return NotFound();
             }
+            ViewData["Disease"] = new SelectList(_context.DiseaseAnimal, "Id", "DiseaseName", animal.Disease);
+            ViewData["Race"] = new SelectList(_context.Race, "Id", "RaceName", animal.Race);
+            ViewData["State"] = new SelectList(_context.State, "Id", "StateName", animal.State);
             return View(animal);
         }
 
@@ -112,7 +99,7 @@ namespace ZooboxApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Location,EntranceDay,Race,Disease,State")] Animal animal)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Race,Disease,EntranceDay,Location,State")] Animal animal)
         {
             if (id != animal.Id)
             {
@@ -139,6 +126,9 @@ namespace ZooboxApplication.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Disease"] = new SelectList(_context.DiseaseAnimal, "Id", "Id", animal.Disease);
+            ViewData["Race"] = new SelectList(_context.Race, "Id", "Id", animal.Race);
+            ViewData["State"] = new SelectList(_context.State, "Id", "Id", animal.State);
             return View(animal);
         }
 
@@ -151,6 +141,9 @@ namespace ZooboxApplication.Controllers
             }
 
             var animal = await _context.Animal
+                .Include(a => a.DiseaseName)
+                .Include(a => a.RaceName)
+                .Include(a => a.Statename)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (animal == null)
             {
@@ -175,8 +168,5 @@ namespace ZooboxApplication.Controllers
         {
             return _context.Animal.Any(e => e.Id == id);
         }
-
-
-        
     }
 }
