@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20181209193722_FK.cs" />
+    <Compile Remove="Migrations\20181209193722_FK.Designer.cs" />
+    <Compile Remove="Migrations\20181209195515_FK.cs" />
+    <Compile Remove="Migrations\20181209195515_FK.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MailKit" Version="2.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using ZooboxApplication.Models.ViewModel;
 
 namespace ZooboxApplication.Controllers
 {
+    [Authorize]
     public class AnimalsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -48,18 +50,28 @@ namespace ZooboxApplication.Controllers
         // GET: Animals/Create
         public IActionResult Create()
         {
-            var vm = new AnimalViewModel();
-           vm.Race = _context.Race.Select(a => new SelectListItem()
+            var vm = new AnimalViewModel
             {
-                Value = a.Id.ToString(),
-                Text = a.RaceName
-            }).ToList();
-            vm.Disease = _context.DiseaseAnimal.Select(a => new SelectListItem()
-            {
-                Value = a.Id.ToString(),
-                Text = a.DiseaseName
-            }).ToList();
+                Race = _context.Race.Select(a => new SelectListItem()
+                {
+                    Value = a.Id.ToString(),
+                    Text = a.RaceName
+                }).ToList(),
 
+                Disease = _context.DiseaseAnimal.Select(a => new SelectListItem()
+                {
+                    Value = a.Id.ToString(),
+                    Text = a.DiseaseName
+                }).ToList(),
+
+                State = _context.State.Select(a => new SelectListItem()
+                {
+                    Value = a.Id.ToString(),
+                    Text = a.StateName
+                }).ToList()
+            };
+
+            
         return View(vm);
         }
 
@@ -68,7 +80,7 @@ namespace ZooboxApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Location,EntranceDay,Race,Disease")] Animal animal)
+        public async Task<IActionResult> Create([Bind("ID,Name,Location,EntranceDay,Race,Disease,State")] Animal animal)
         {
             if (ModelState.IsValid)
             {   
@@ -100,7 +112,7 @@ namespace ZooboxApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Location,EntranceDay,Race,DiseaseName")] Animal animal)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Location,EntranceDay,Race,Disease,State")] Animal animal)
         {
             if (id != animal.Id)
             {
@@ -163,5 +175,8 @@ namespace ZooboxApplication.Controllers
         {
             return _context.Animal.Any(e => e.Id == id);
         }
+
+
+        
     }
 }

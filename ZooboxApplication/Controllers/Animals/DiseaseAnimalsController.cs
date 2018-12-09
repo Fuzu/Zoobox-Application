@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using ZooboxApplication.Models.Animals;
 
 namespace ZooboxApplication.Controllers.Animals
 {
+    [Authorize]
     public class DiseaseAnimalsController : Controller
     {
         private readonly ApplicationDbContext _context;

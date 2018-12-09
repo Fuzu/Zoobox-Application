@@ -12,5 +12,7 @@ namespace ZooboxApplication.Models
         [Display(Name = "Nome da Raça")]
         public String RaceName { get; set; }
 
+        public ICollection<Animal> Animals{ get; set; }
+
     }
 }

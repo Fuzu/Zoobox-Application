@@ -25,5 +25,7 @@ namespace ZooboxApplication.Models.ViewModel
 
         [DisplayFormat(DataFormatString = "{MM/dd/yyyy}")]
         public DateTime EntranceDay { get; set; }
+
+        public List<SelectListItem> State { get; set; }
     }
 }
