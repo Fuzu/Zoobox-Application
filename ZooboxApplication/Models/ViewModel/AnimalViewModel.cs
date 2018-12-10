@@ -23,9 +23,12 @@ namespace ZooboxApplication.Models.ViewModel
         [Display(Name = "Doença")]
         public List<SelectListItem> Disease { get; set; }
 
+ 
         [DisplayFormat(DataFormatString = "{MM/dd/yyyy}")]
+        [Display(Name = "Entrada")]
         public DateTime EntranceDay { get; set; }
 
+        [Display(Name = "Estado")]
         public List<SelectListItem> State { get; set; }
     }
 }

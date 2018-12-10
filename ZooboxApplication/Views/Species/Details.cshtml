@@ -2,11 +2,12 @@
 
 @{
     ViewData["Title"] = "Informação";
+    Layout = "/Views/Shared/_LayoutPrint.cshtml";
 }
 
 
 <div>
-    <h4>Especie Animal</h4>
+    <h4>Espécie Animal</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -16,7 +17,4 @@
             @Html.DisplayFor(model => model.SpecieName)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id"><span class="glyphicon glyphicon-pencil"></span></a> |
 </div>

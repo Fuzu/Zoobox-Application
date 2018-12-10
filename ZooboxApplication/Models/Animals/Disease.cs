@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace ZooboxApplication.Models.Animals
 {
+    [Display(Name = "Doença")]
     public class Disease
     {
         public int Id { get; set; }
 
-        [Display(Name = "Nome da doença")]
+        [Display(Name = "Doença")]
         public String DiseaseName { get; set; }
     }
 }

@@ -2,11 +2,13 @@
 
 @{
     ViewData["Title"] = "Informação";
+    Layout = "/Views/Shared/_LayoutPrint.cshtml";
 }
 
-<h2>Informação</h2>
 
-<div>
+    <h2>Informação</h2>
+
+    <div>
     <h4>Animal</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -47,7 +49,4 @@
             @Html.DisplayFor(model => model.Statename.StateName)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
 </div>

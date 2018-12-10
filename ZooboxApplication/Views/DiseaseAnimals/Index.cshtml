@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<ZooboxApplication.Models.Animals.DiseaseAnimal>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Listagem de Doenças";
 }
 
-<h2>Index</h2>
+<h2>@ViewData["Title"]</h2>
 
 <p>
     <a asp-action="Create">Criar novo</a>
@@ -27,7 +27,7 @@
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id"><span class="glyphicon glyphicon-pencil"></span></a> |
-                    <a asp-action="Details" asp-route-id="@item.Id"><span class="glyphicon glyphicon-info-sign"></span></a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a> |
                     <a asp-action="Delete" asp-route-id="@item.Id"><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
             </tr>
