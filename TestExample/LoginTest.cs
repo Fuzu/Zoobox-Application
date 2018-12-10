@@ -10,7 +10,7 @@ using System.Reflection;
 using Xunit;
 using Assert = NUnit.Framework.Assert;
 
-namespace TestExample
+namespace TestZoobox
 {
     [TestClass]
     public class LoginTest
@@ -18,7 +18,7 @@ namespace TestExample
 
 
         [TestMethod]
-        public void LoginTest()
+        public void Login()
         {
             using (var driver = new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)))
             {

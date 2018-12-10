@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestExample
+namespace TestZoobox
 {
     public static class WebDriverExtensions
         {
