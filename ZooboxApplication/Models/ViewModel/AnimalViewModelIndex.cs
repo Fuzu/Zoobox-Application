@@ -13,6 +13,7 @@ namespace ZooboxApplication.Models.ViewModel
 
         public List<Animal> AnimalList { get; set; }
 
+
         [Display(Name = "Raça")]
         public List<SelectListItem> Race { get; set; }
 
