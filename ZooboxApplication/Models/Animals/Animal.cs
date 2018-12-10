@@ -16,13 +16,14 @@ namespace ZooboxApplication.Models
         [Display(Name = "Nome")]
         public String Name { get; set; }
 
+        [Display(Name = "Raça")]
         public int Race { get; set; }
 
         [ForeignKey("Race")]
         [Display(Name = "Raça")]
         public virtual Race RaceName { get; set; }
 
-
+        [Display(Name = "Doença")]
         public int Disease { get; set; }
 
         [ForeignKey("Disease")]
@@ -31,6 +32,7 @@ namespace ZooboxApplication.Models
 
 
         [DisplayFormat(DataFormatString = "{0:d}")]
+        [Display(Name = "Data Entrada")]
         public DateTime EntranceDay { get; set; }
 
         [Display(Name = "Localização no Canil")]
@@ -40,6 +42,7 @@ namespace ZooboxApplication.Models
         [Display(Name = "Estado")]
         public virtual State Statename {get;set;}
 
+        [Display(Name = "Estado")]
         public int State { get; set; }
 
 
