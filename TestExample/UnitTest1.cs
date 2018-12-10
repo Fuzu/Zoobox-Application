@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using System;
@@ -12,14 +13,20 @@ using Assert = NUnit.Framework.Assert;
 
 namespace TestExample
 {
+    
     [TestClass]
     public class UnitTest1
     {
-
+        public string Site = "https://localhost:44381";
 
         [TestMethod]
         public void LoginTest()
         {
+
+            //FirefoxDriverService service = FirefoxDriverService.CreateDefaultService(@"C:\UnitTests");
+            //service.FirefoxBinaryPath = @"C:\Program Files\Mozilla Firefox\firefox.exe";
+            //using (var driver = new FirefoxDriver(service))
+            //{
             using (var driver = new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)))
             {
                 try
@@ -27,7 +34,7 @@ namespace TestExample
 
                     IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
 
-                    driver.Navigate().GoToUrl("http://localhost:59461");
+                    driver.Navigate().GoToUrl(Site);
 
                     IWebElement email = driver.FindElement(By.Id("emailInput"));
                     email.SendKeys("teste@teste");
@@ -58,6 +65,7 @@ namespace TestExample
             }
         }
 
+
         [TestMethod]
         public void RecuperarPasswordTest()
         {
@@ -65,14 +73,14 @@ namespace TestExample
             {
                 try
                 {
-                    driver.Navigate().GoToUrl("http://localhost:59461");
+                    driver.Navigate().GoToUrl(Site);
 
                     var button = driver.FindElement(By.Id("forgotPassword"));
                     button.Click();
 
                     String Url = driver.Url;
 
-                    Assert.AreEqual(Url, "http://localhost:59461/Identity/Account/ForgotPassword");
+                    Assert.AreEqual(Url, Site+"/Identity/Account/ForgotPassword");
 
                     IWebElement email = driver.FindElement(By.Id("email"));
                     email.SendKeys("teste@teste");
@@ -82,7 +90,7 @@ namespace TestExample
                     buttonRecover.Click();
                    
 
-                    Assert.AreEqual(Url, " http://localhost:59461/Identity/Account/ForgotPasswordConfirmation");
+                    Assert.AreEqual(Url, Site+"/Identity/Account/ForgotPasswordConfirmation");
 
 
 
@@ -92,6 +100,35 @@ namespace TestExample
 
                 }
             }
+        }
+
+        public void CreateAnimalTest()
+        {
+
+            
+        }
+        public void UpdateAnimalTest()
+        {
+
+
+        }
+
+        public void ListAnimalsTest()
+        {
+
+
+        }
+
+        public void AddRace()
+        {
+
+
+        }
+
+        public void AddSpecie()
+        {
+
+
         }
     }
 }
