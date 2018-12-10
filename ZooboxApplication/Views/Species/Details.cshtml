@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Informação";
+    Layout = "/Views/Shared/_LayoutPrint.cshtml";
 }
 
 
@@ -16,7 +17,4 @@
             @Html.DisplayFor(model => model.SpecieName)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id"><span class="glyphicon glyphicon-pencil"></span></a> |
 </div>
