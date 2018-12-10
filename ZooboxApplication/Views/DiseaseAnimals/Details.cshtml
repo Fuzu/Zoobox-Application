@@ -1,13 +1,13 @@
 ﻿@model ZooboxApplication.Models.Animals.DiseaseAnimal
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
 }
 
 <h2><span class="glyphicon glyphicon-info-sign"></span></h2>
 
 <div>
-    <h4>Doença animal</h4>
+    <h4>Doença</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -19,5 +19,5 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id"><span class="glyphicon glyphicon-pencil"></span></a> |
+    <a asp-action="Edit" asp-route-id="@Model.Id"><span class="glyphicon glyphicon-pencil"></span></a> 
 </div>
