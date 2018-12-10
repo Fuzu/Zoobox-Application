@@ -11,16 +11,16 @@ using System.Reflection;
 using Xunit;
 using Assert = NUnit.Framework.Assert;
 
-namespace TestExample
+namespace TestZoobox
 {
     
     [TestClass]
-    public class UnitTest1
+    public class LoginTest
     {
         public string Site = "https://localhost:44381";
 
         [TestMethod]
-        public void LoginTest()
+        public void Login()
         {
 
             //FirefoxDriverService service = FirefoxDriverService.CreateDefaultService(@"C:\UnitTests");
