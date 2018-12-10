@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ZooboxApplication.Data;
 using ZooboxApplication.Models;
+using ZooboxApplication.Models.ViewModel;
 
 namespace ZooboxApplication.Controllers.Animals
 {
@@ -33,10 +34,33 @@ namespace ZooboxApplication.Controllers.Animals
         ///
         /// <returns>   Retorna a view da página Animais, com uma lista dos animais registados na Base de dados. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, string breed)
         {
-            var applicationDbContext = _context.Animal.Include(a => a.DiseaseName).Include(a => a.RaceName).Include(a => a.Statename);
-            return View(await applicationDbContext.ToListAsync());
+            //var applicationDbContext = _context.Animal.Include(a => a.DiseaseName).Include(a => a.RaceName).Include(a => a.Statename);
+            var animals = from m in _context.Animal
+                          select m;
+
+            var raceList = from r in _context.Race
+                           orderby r.RaceName
+                           select r;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                animals = animals.Where(s => s.Name.Contains(searchString));
+            }
+            if (!String.IsNullOrEmpty(breed))
+            {
+                animals = animals.Where(s => s.RaceName.Id.ToString() == breed);
+            }
+            var viewModel = new AnimalViewModelIndex();
+            viewModel.AnimalList = await animals.ToListAsync();
+            var temList = new List<Race>(await raceList.ToListAsync());
+            viewModel.Race = temList.ConvertAll(item => new SelectListItem(
+                text: item.RaceName,
+                value: item.Id.ToString()
+                )
+            );
+            return View(viewModel);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
