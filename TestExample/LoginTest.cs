@@ -13,7 +13,7 @@ using Assert = NUnit.Framework.Assert;
 namespace TestExample
 {
     [TestClass]
-    public class UnitTest1
+    public class LoginTest
     {
 
 

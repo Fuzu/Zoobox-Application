@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,12 @@ using ZooboxApplication.Models;
 
 namespace ZooboxApplication.Controllers.Animals
 {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   Controlador de páginas Animais. </summary>
+    ///
+    /// <remarks>   André Silva, 09/12/2018. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    [Authorize]
     public class AnimalsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,14 +26,27 @@ namespace ZooboxApplication.Controllers.Animals
             _context = context;
         }
 
-        // GET: Animals
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Página Animais </summary>
+        ///
+        /// <remarks>   André Silva, 09/12/2018. </remarks>
+        ///
+        /// <returns>   Retorna a view da página Animais, com uma lista dos animais registados na Base de dados. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Animal.Include(a => a.DiseaseName).Include(a => a.RaceName).Include(a => a.Statename);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Animals/Details/5
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Detalhes de um Animal </summary>
+        ///
+        /// <remarks>   André Silva, 09/12/2018. </remarks>
+        ///
+        /// <param name="id" - Id do Animal</param>
+        /// <returns>   Retorna uma view com os detalhes de um Animal, Caso contrário devolve Not Found</returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,7 +67,15 @@ namespace ZooboxApplication.Controllers.Animals
             return View(animal);
         }
 
-        // GET: Animals/Create
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Detalhes de um Animal </summary>
+        ///
+        /// <remarks>   André Silva, 09/12/2018. </remarks>
+        ///
+        /// <param name="id" - Id do Animal</param>
+        /// <returns>   Retorna uma view com um formulário de inserção de um animal</returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public IActionResult Create()
         {
             ViewData["Disease"] = new SelectList(_context.DiseaseAnimal, "Id", "DiseaseName");

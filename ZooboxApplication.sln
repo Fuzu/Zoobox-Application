@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZooboxApplication", "ZooboxApplication\ZooboxApplication.csproj", "{A76ED285-D2E6-4739-A705-BA3DFB9DA6F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestExample", "TestExample\TestExample.csproj", "{716BC9C2-4EC0-4977-B4D4-30E227A04E2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestZoobox", "TestExample\TestZoobox.csproj", "{716BC9C2-4EC0-4977-B4D4-30E227A04E2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
