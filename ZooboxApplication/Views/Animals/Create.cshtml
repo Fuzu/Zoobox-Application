@@ -19,13 +19,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="Race" class="control-label"></label>
-                <select asp-for="Race" class ="form-control" asp-items="ViewBag.Race"></select>
+                <select asp-for="Race" class="form-control" asp-items="ViewBag.Race"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Disease" class="control-label"></label>
-                <select asp-for="Disease" class ="form-control" asp-items="ViewBag.Disease"></select>
+                <select asp-for="Disease" class="form-control" asp-items="ViewBag.Disease"></select>
             </div>
             <div class="form-group">
+
                 <label asp-for="EntranceDay" class="control-label"></label>
                 <input asp-for="EntranceDay" class="form-control" />
                 <span asp-validation-for="EntranceDay" class="text-danger"></span>
@@ -37,15 +38,30 @@
             </div>
             <div class="form-group">
                 <label asp-for="State" class="control-label"></label>
-                <select asp-for="State" class ="form-control" asp-items="ViewBag.State"></select>
+                <select asp-for="State" class="form-control" asp-items="ViewBag.State"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Criar" class="btn btn-default" />
+                <input type="submit" id="submitAnimal" value="Criar" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script src="/vendor/jquery/jquery.js"></script>
+<script>
+    $(document).ready(function () {
+        var m = new Date();
+        var dateString =
+            m.getUTCFullYear() + "-" +
+            ("0" + (m.getUTCMonth() + 1)).slice(-2) + "-" +
+            ("0" + m.getUTCDate()).slice(-2) + "T" +
+            ("0" + m.getUTCHours()).slice(-2) + ":" +
+            ("0" + m.getUTCMinutes()).slice(-2);
+        $(EntranceDay).val(dateString);
+    });
+</script> 
