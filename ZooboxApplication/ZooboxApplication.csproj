@@ -10,6 +10,14 @@
     <Compile Remove="Migrations\20181209193722_FK.Designer.cs" />
     <Compile Remove="Migrations\20181209195515_FK.cs" />
     <Compile Remove="Migrations\20181209195515_FK.Designer.cs" />
+    <Compile Remove="Migrations\20181229172140_jobsCreation.cs" />
+    <Compile Remove="Migrations\20181229172140_jobsCreation.Designer.cs" />
+    <Compile Remove="Migrations\20181229173114_jobsCreation.cs" />
+    <Compile Remove="Migrations\20181229173114_jobsCreation.Designer.cs" />
+    <Compile Remove="Migrations\20190102180510_jobs.cs" />
+    <Compile Remove="Migrations\20190102180510_jobs.Designer.cs" />
+    <Compile Remove="Migrations\20190102180843_jobs.cs" />
+    <Compile Remove="Migrations\20190102180843_jobs.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,54 @@
+﻿@model ZooboxApplication.Models.Job
+
+@{
+    ViewData["Title"] = "Tarefa";
+}
+
+<h2>Tarefa</h2>
+
+<div>
+    <h4>Job</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Abbreviation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Abbreviation)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BeginDay)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BeginDay)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDay)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EndDay)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.State)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.State)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Email)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    <a asp-action="Index">Voltar</a>
+</div>
