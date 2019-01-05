@@ -41,12 +41,29 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Required]
+            [Display(Name = "Nome")]
+            public string Name { get; set; }
+
+            [Required]
             [EmailAddress]
+            [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Phone]
-            [Display(Name = "Telemóvel")]
-            public string PhoneNumber { get; set; }
+            [Required]
+            [DataType(DataType.Date)]
+            [Display(Name = "Data de Nascimento")]
+            public DateTime DateOfBirth { get; set; }
+
+            [Display(Name = "Morada")]
+            public string address { get; set; }
+
+            [Required]
+            [RegularExpression("^[0-9]{9}$", ErrorMessage = "Número Inválido")]
+            [Display(Name = "Telefone")]
+            public String PhoneNumber { get; set; }
+
+            [Display(Name = "Informação adicional")]
+            public string additionInformation { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -109,6 +126,7 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+         
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
@@ -138,10 +156,10 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account.Manage
                 protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
                 email,
-                "Confirma o seu email",
-                $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Por favor confirma o teu email.</a>.");
+                "Confirm your email",
+                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-            StatusMessage = "Foi enviado com sucesso para o seu email.";
+            StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();
         }
     }

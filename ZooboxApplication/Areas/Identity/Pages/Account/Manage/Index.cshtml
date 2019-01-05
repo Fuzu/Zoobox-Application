@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Perfil";
+    ViewData["Title"] = "Profile";
 }
 
 <h4>@ViewData["Title"]</h4>
@@ -15,6 +15,12 @@
                 <input asp-for="Username" class="form-control" disabled />
             </div>
             <div class="form-group">
+                <label asp-for="Input.Name"></label>
+                <input asp-for="Input.Name" class="form-control" />
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                 <label asp-for="Input.Email"></label>
                 @if (Model.IsEmailConfirmed)
                 {
@@ -26,7 +32,7 @@
                 else
                 {
                     <input asp-for="Input.Email" class="form-control" />
-                    <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Enviar e-mail de confirmação</button>
+                    <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Send verification email</button>
                 }
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
@@ -35,6 +41,17 @@
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Input.additionInformation"></label>
+                <input asp-for="Input.additionInformation" class="form-control" />
+                <span asp-validation-for="Input.additionInformation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.DateOfBirth"></label>
+                <input asp-for="Input.DateOfBirth" class="form-control" />
+                <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+            </div>
+
             <button type="submit" class="btn btn-default">Guardar</button>
         </form>
     </div>

@@ -109,7 +109,8 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account
                     additionInformation = Input.additionInformation,
                     address = Input.address,
                     DateOfBirth = Input.DateOfBirth,
-                    Name = Input.Name
+                    Name = Input.Name,
+                    Role = Input.Role
                     };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
