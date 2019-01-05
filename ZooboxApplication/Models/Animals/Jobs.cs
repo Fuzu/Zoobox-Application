@@ -23,11 +23,11 @@ namespace ZooboxApplication.Models
         [Required(ErrorMessage = "Não pode estar vazia")]
         public String Description { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DataType(DataType.Date)]
         [Display(Name = "Data Entrada")]
         public DateTime BeginDay { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DataType(DataType.Date)]
         [Display(Name = "Data Fim")]
         [Required(ErrorMessage = "Não pode estar vazia")]
         public DateTime EndDay { get; set; }

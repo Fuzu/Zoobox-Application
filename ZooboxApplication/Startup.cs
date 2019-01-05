@@ -20,6 +20,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using MimeKit;
+using ZooboxApplication.Models;
 
 namespace ZooboxApplication
 {
@@ -73,13 +74,11 @@ namespace ZooboxApplication
 
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                 // options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-                  options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<IdentityUser, IdentityRole>()
-        // services.AddDefaultIdentity<IdentityUser>()
-        .AddEntityFrameworkStores<ApplicationDbContext>()
-        .AddDefaultTokenProviders();
-
+                  options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                 // options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+               .AddEntityFrameworkStores<ApplicationDbContext>()
+               .AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddRazorPagesOptions(options =>

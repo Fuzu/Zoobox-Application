@@ -10,17 +10,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.DependencyInjection;
-using ZooboxApplication.Data;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
+using Microsoft.EntityFrameworkCore;
+using ZooboxApplication.Models;
 
 namespace ZooboxApplication.Areas.Identity.Pages.Account
 {
     [Authorize]
     public class RegistarModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegistarModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -29,8 +29,8 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account
 
 
         public RegistarModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             ILogger<RegistarModel> logger, RoleManager<IdentityRole> roleManager,
             IEmailSender emailSender)
         {
@@ -57,10 +57,31 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+
+            [Required]
+            [Display(Name = "Nome")]
+            public string Name { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
+
+            [Required]
+            [DataType(DataType.Date)]
+            [Display(Name = "Data de Nascimento")]
+            public DateTime DateOfBirth { get; set; }
+
+            [Display(Name = "Morada")]
+            public string address { get; set; }
+
+            [Required]
+            [RegularExpression("^[0-9]{9}$", ErrorMessage = "Número Inválido")]
+            [Display(Name = "Telefone")]
+            public String PhoneNumber { get; set; }
+
+            [Display(Name = "Informação adicional")]
+            public string additionInformation { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "O {0} tem de ter pelo menos {2} e no máximo {1} número de caracteres.", MinimumLength = 6)]
@@ -72,6 +93,7 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account
             [Display(Name = "Confirme a password")]
             [Compare("Password", ErrorMessage = "A password não está igual a confirmação da mesma.")]
             public string ConfirmPassword { get; set; }
+
 
 
             [Display(Name = "Tipo de Utilizador")]
@@ -94,7 +116,16 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    PhoneNumber = Input.PhoneNumber,
+                    additionInformation = Input.additionInformation,
+                    address = Input.address,
+                    DateOfBirth = Input.DateOfBirth,
+                    Name = Input.Name
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

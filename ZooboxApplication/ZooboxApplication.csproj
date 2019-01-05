@@ -18,6 +18,12 @@
     <Compile Remove="Migrations\20190102180510_jobs.Designer.cs" />
     <Compile Remove="Migrations\20190102180843_jobs.cs" />
     <Compile Remove="Migrations\20190102180843_jobs.Designer.cs" />
+    <Compile Remove="Migrations\20190105124855_update-user-custom.cs" />
+    <Compile Remove="Migrations\20190105124855_update-user-custom.Designer.cs" />
+    <Compile Remove="Migrations\20190105125327_update-user-custom.cs" />
+    <Compile Remove="Migrations\20190105125327_update-user-custom.Designer.cs" />
+    <Compile Remove="Migrations\20190105143936_Initial.cs" />
+    <Compile Remove="Migrations\20190105143936_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

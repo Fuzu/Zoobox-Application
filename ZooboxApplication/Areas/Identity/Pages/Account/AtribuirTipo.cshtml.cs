@@ -13,14 +13,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.DependencyInjection;
 using ZooboxApplication.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using ZooboxApplication.Models;
 
 namespace ZooboxApplication.Areas.Identity.Pages.Account
 {
     [Authorize]
     public class AtribuirTipoModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegistarModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -29,8 +30,8 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account
 
 
         public AtribuirTipoModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             ILogger<RegistarModel> logger, RoleManager<IdentityRole> roleManager,
             IEmailSender emailSender)
         {

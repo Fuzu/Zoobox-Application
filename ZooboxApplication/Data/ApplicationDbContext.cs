@@ -8,7 +8,7 @@ using ZooboxApplication.Models.Animals;
 
 namespace ZooboxApplication.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -21,5 +21,6 @@ namespace ZooboxApplication.Data
         public DbSet<ZooboxApplication.Models.Animals.DiseaseAnimal> DiseaseAnimal { get; set; }
         public DbSet<ZooboxApplication.Models.Job> Job{ get; set; }
         public DbSet<ZooboxApplication.Models.ApplicationUser> ApplicationUser { get; set; }
+        //public DbSet<ZooboxApplication.Models.UserCustom> UserList { get; set; }
     }
 }
