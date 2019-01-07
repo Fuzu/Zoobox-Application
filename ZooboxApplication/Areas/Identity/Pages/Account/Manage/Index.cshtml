@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Perfil";
+    ViewData["Title"] = "Profile";
 }
 
 <h4>@ViewData["Title"]</h4>
@@ -34,6 +34,12 @@
                 <input asp-for="Username" class="form-control" disabled />
             </div>
             <div class="form-group">
+                <label asp-for="Input.Name"></label>
+                <input asp-for="Input.Name" class="form-control" />
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                 <label asp-for="Input.Email"></label>
                 @if (Model.IsEmailConfirmed)
                 {
@@ -45,7 +51,7 @@
                 else
                 {
                     <input asp-for="Input.Email" class="form-control" />
-                    <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Enviar e-mail de confirmação</button>
+                    <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Send verification email</button>
                 }
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
@@ -53,27 +59,6 @@
                 <label asp-for="Input.PhoneNumber"></label>
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-            </div>
-
-            <div class="form-group" style="margin-left: -15px;">
-                <label class="col-md-12 control-label">Imagem</label>
-                <div class="col-md-12">
-                    <div class="fileupload fileupload-new" data-provides="fileupload">
-                        <input type="hidden" value="" name="">
-                        <div class="input-append">
-                            <div class="uneditable-input">
-                                <i class="fa fa-file fileupload-exists"></i>
-                                <span class="fileupload-preview"></span>
-                            </div>
-                            <span class="btn btn-default btn-file">
-                                <span class="fileupload-exists">Editar</span>
-                                <span class="fileupload-new">Selecionar</span>
-                                <input type="file" asp-for="Input.Image"  accept="image/x-png,image/gif,image/jpeg">
-                            </span>
-                            <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Eliminar</a>
-                        </div>
-                    </div>
-                </div>
             </div>
             <button type="submit" class="btn btn-default">Guardar</button>
         </form>

@@ -25,74 +25,59 @@
     </div>
 
 </form>
-<br />
-<div class="row">
-    <div class="col-md-12">
-        <table class="table" id="AnimaisList">
-            <thead>
-                <tr>
-                    <th>
-                        Nome
-                    </th>
-                    <th>
-                        Raça
-                    </th>
-                    <th>
-                        Doença
-                    </th>
-                    <th>
-                        Dia de Entrada
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nome
+            </th>
+            <th>
+                Raça
+            </th>
+            <th>
+                Doença
+            </th>
+            <th>
+                Dia de Entrada
 
-                    </th>
-                    <th>
-                        Doença
-                    </th>
-                    <th>
-                        Estado
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.AnimalList)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.RaceName.RaceName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DiseaseName.DiseaseName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EntranceDay)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Location)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Statename.StateName)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id"><span class="glyphicon glyphicon-pencil"></span></a> |
-                            <a asp-action="Details" asp-route-id="@item.Id" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id"><span class="glyphicon glyphicon-trash"></span></a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
-
-@section scripts
-    {
-
-    <script>
-        $(document).ready(function () {
-            $('#AnimaisList').DataTable(dtSettings);
-        });
-    </script>
-}
+            </th>
+            <th>
+                Doença
+            </th>
+            <th>
+                Estado
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.AnimalList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RaceName.RaceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiseaseName.DiseaseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EntranceDay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Statename.StateName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id"><span class="glyphicon glyphicon-pencil"></span></a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id"><span class="glyphicon glyphicon-trash"></span></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

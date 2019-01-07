@@ -49,5 +49,8 @@ namespace ZooboxApplication.Models
         [Display(Name = "Imagem")]
         public IFormFile Image { get; set; }
 
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 }

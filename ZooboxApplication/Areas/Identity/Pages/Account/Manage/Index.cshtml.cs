@@ -52,19 +52,17 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Required]
+            [Display(Name = "Nome")]
+            public string Name { get; set; }
+
+            [Required]
             [EmailAddress]
+            [Display(Name = "Email")]
             public string Email { get; set; }
 
             [Phone]
             [Display(Name = "Telemóvel")]
             public string PhoneNumber { get; set; }
-
-            [Display(Name = "Imagem")]
-            public String ImageFile { get; set; }
-
-            
-            public IFormFile Image { get; set; }
-
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -145,8 +143,6 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-           
-
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
@@ -175,11 +171,11 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account.Manage
                 values: new { userId = userId, code = code },
                 protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
-                Input.Email,
+                email,
                 "Confirma o seu email",
                 $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Por favor confirma o teu email.</a>.");
 
-            StatusMessage = "Foi enviado com sucesso para o seu email.";
+            StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();
         }
     }

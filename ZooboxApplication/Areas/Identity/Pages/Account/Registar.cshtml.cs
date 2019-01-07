@@ -94,8 +94,6 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "A password não está igual a confirmação da mesma.")]
             public string ConfirmPassword { get; set; }
 
-
-
             [Display(Name = "Tipo de Utilizador")]
             public string Role { get; set; }
         }
@@ -124,7 +122,8 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account
                     additionInformation = Input.additionInformation,
                     address = Input.address,
                     DateOfBirth = Input.DateOfBirth,
-                    Name = Input.Name
+                    Name = Input.Name,
+                    Role = Input.Role
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
