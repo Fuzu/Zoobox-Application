@@ -2,7 +2,22 @@
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-
+@{ 
+    string imageUser = UserManager.GetUserAsync(User).Result.ImageFile;
+    var roleId = UserManager.GetUserAsync(User).Result.Role;
+    if (roleId == "1")
+    {
+        ViewData["Role"] = "Administrador";
+    }
+    else if (roleId == "2")
+    {
+        ViewData["Role"] = "Funcionário";
+    }
+    else
+    {
+        ViewData["Role"] = "Voluntário";
+    }
+}
 <!-- start: header -->
 <header class="header">
     <div class="logo-container">
@@ -17,9 +32,9 @@
     <!-- start: search & user box -->
     <div class="header-right">
 
-        <form action="pages-search-results.html" class="search nav-form">
+        <form action="/Search" class="search nav-form">
             <div class="input-group input-search">
-                <input type="text" class="form-control" name="q" id="q" placeholder="Search...">
+                <input type="text" class="form-control" name="q" id="q" placeholder="Pesquisar...">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
                 </span>
@@ -28,7 +43,7 @@
 
         <span class="separator"></span>
 
-        <ul class="notifications">
+        @*<ul class="notifications">
             <li>
                 <a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown">
                     <i class="fa fa-tasks"></i>
@@ -189,16 +204,24 @@
             </li>
         </ul>
 
-        <span class="separator"></span>
+        <span class="separator"></span>*@
 
         <div id="userbox" class="userbox">
             <a href="#" data-toggle="dropdown">
                 <figure class="profile-picture">
-                    <img src="~/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="~/images/!logged-user.jpg" />
+                    @if (imageUser != null)
+                    {
+                        <img src="@imageUser" alt="Joseph Doe" class="img-circle" data-lock-picture="@imageUser" />
+                    }
+                    else
+                    { 
+                        <img src="~/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="~/images/!logged-user.jpg" />
+                    }
+
                 </figure>
                 <div class="profile-info" data-lock-name="@UserManager.GetUserName(User)" data-lock-email="@UserManager.GetUserName(User)">
                     <span class="name">@UserManager.GetUserName(User)</span>
-                    <span class="role">administrador</span>
+                    <span class="role">@ViewData["Role"]</span>
                 </div>
 
                 <i class="fa custom-caret"></i>

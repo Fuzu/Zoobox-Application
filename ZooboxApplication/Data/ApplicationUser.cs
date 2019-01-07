@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,10 +20,7 @@ namespace ZooboxApplication.Models
         [Display(Name = "Nome")]
         public string Name { get; set; }
 
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+
 
         [Required]
         [DataType(DataType.Date)]
@@ -42,5 +41,13 @@ namespace ZooboxApplication.Models
 
         [Display(Name = "Tipo de Utilizador")]
         public string Role { get; set; }
+
+        [Display(Name = "Imagem")]
+        public String ImageFile { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Imagem")]
+        public IFormFile Image { get; set; }
+
     }
 }

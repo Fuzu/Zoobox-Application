@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Criar Novo</a>
 </p>
-<table class="table">
+<table class="table" id="stateList">
     <thead>
         <tr>
             <th>
@@ -19,17 +19,29 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.StateName)
-            </td>
-            <td class="text-right">
-                <a asp-action="Edit" asp-route-id="@item.Id"><span class="glyphicon glyphicon-pencil text-muted"></span></a> |
-                <a asp-action="Details" asp-route-id="@item.Id" target="_blank"><span class="glyphicon glyphicon-info-sign text-primary"></span></a> |
-                <a asp-action="Delete" asp-route-id="@item.Id"><span class="glyphicon glyphicon-trash text-danger"></span></a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StateName)
+                </td>
+                <td class="text-right">
+                    <a asp-action="Edit" asp-route-id="@item.Id"><span class="glyphicon glyphicon-pencil text-muted"></span></a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" target="_blank"><span class="glyphicon glyphicon-info-sign text-primary"></span></a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id"><span class="glyphicon glyphicon-trash text-danger"></span></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+@section scripts
+    {
+
+<script>
+        $(document).ready(function () {
+            $('#stateList').DataTable(dtSettings);
+        });
+</script>
+}

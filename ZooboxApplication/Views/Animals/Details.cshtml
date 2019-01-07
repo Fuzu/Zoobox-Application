@@ -1,52 +1,63 @@
 ﻿@model ZooboxApplication.Models.Animal
 
 @{
-    ViewData["Title"] = "Informação";
+    ViewData["Title"] = "Animal - Detalhes";
     Layout = "/Views/Shared/_LayoutPrint.cshtml";
 }
 
 
-    <h2>Informação</h2>
-
-    <div>
-    <h4>Animal</h4>
+<h3>@ViewData["Title"]</h3>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.RaceName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RaceName.RaceName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DiseaseName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DiseaseName.DiseaseName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EntranceDay)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EntranceDay)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Location)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Location)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Statename)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Statename.StateName)
-        </dd>
-    </dl>
-</div>
+    <div class="row">
+        <div class="col-md-5">
+            @if (Model.ImageFile != null)
+            {
+                <img src="@Html.DisplayFor(model => model.ImageFile)" alt="Foto do animal" style="height:250px; width:auto;" />
+            }
+            else
+            {
+                <img src="/images/placeholder.png" alt="Foto do animal" style="height:250px; width:auto;" />
+            }
+
+            </div>
+            <div class="col-md-6">
+                <dl>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.RaceName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.RaceName.RaceName)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DiseaseName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.DiseaseName.DiseaseName)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.EntranceDay)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.EntranceDay)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Location)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Location)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Statename)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Statename.StateName)
+                    </dd>
+                </dl>
+            </div>
+        </div>

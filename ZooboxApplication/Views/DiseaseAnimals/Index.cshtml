@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Criar novo</a>
 </p>
-<table class="table">
+<table class="table" id="DoencasList">
     <thead>
         <tr>
             <th>
@@ -33,3 +33,13 @@
             </tr>
         }
     </tbody>
+
+    @section scripts
+        {
+
+        <script>
+        $(document).ready(function () {
+            $('#DoencasList').DataTable(dtSettings);
+        });
+        </script>
+    }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -44,6 +45,13 @@ namespace ZooboxApplication.Models
 
         [Display(Name = "Estado")]
         public int State { get; set; }
+
+        [Display(Name = "Imagem")]
+        public String ImageFile { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Imagem")]
+        public  IFormFile Image { get; set; }
 
 
 

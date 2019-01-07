@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="~/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
     <link rel="stylesheet" href="~/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
     <link rel="stylesheet" href="~/vendor/morris/morris.css" />
+    <link rel="stylesheet" href="~/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css">
 
     <!-- Theme CSS -->
     <link rel="stylesheet" href="~/stylesheets/theme.css" />
@@ -35,15 +36,19 @@
     <!-- Theme Custom CSS -->
     <link rel="stylesheet" href="~/stylesheets/theme-custom.css">
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.css" />
+
+
+
     <!-- Head Libs -->
     <script src="~/vendor/modernizr/modernizr.js"></script>
     <environment include="Development">
     </environment>
     <environment exclude="Development">
         @*<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />*@
+                  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+                  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+            <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />*@
     </environment>
 </head>
 <body>
@@ -82,54 +87,63 @@
         </div>
         <partial name="_SidebarRight" />
     </section>
-        
 
-        <!-- Vendor -->
-        <script src="~/vendor/jquery/jquery.js"></script>
-        <script src="~/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
-        <script src="~/vendor/bootstrap/js/bootstrap.js"></script>
-        <script src="~/vendor/nanoscroller/nanoscroller.js"></script>
-        <script src="~/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-        <script src="~/vendor/magnific-popup/magnific-popup.js"></script>
-        <script src="~/vendor/jquery-placeholder/jquery.placeholder.js"></script>
 
-        <!-- Specific Page Vendor -->
-        <script src="~/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
-        <script src="~/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
-        <script src="~/vendor/jquery-appear/jquery.appear.js"></script>
-        <script src="~/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
-        <script src="~/vendor/jquery-easypiechart/jquery.easypiechart.js"></script>
-        <script src="~/vendor/flot/jquery.flot.js"></script>
-        <script src="~/vendor/flot-tooltip/jquery.flot.tooltip.js"></script>
-        <script src="~/vendor/flot/jquery.flot.pie.js"></script>
-        <script src="~/vendor/flot/jquery.flot.categories.js"></script>
-        <script src="~/vendor/flot/jquery.flot.resize.js"></script>
-        <script src="~/vendor/jquery-sparkline/jquery.sparkline.js"></script>
-        <script src="~/vendor/raphael/raphael.js"></script>
-        <script src="~/vendor/morris/morris.js"></script>
-        <script src="~/vendor/gauge/gauge.js"></script>
-        <script src="~/vendor/snap-svg/snap.svg.js"></script>
-        <script src="~/vendor/liquid-meter/liquid.meter.js"></script>
-        <script src="~/vendor/jqvmap/jquery.vmap.js"></script>
-        <script src="~/vendor/jqvmap/data/jquery.vmap.sampledata.js"></script>
-        <script src="~/vendor/jqvmap/maps/jquery.vmap.world.js"></script>
-        <script src="~/vendor/jqvmap/maps/continents/jquery.vmap.africa.js"></script>
-        <script src="~/vendor/jqvmap/maps/continents/jquery.vmap.asia.js"></script>
-        <script src="~/vendor/jqvmap/maps/continents/jquery.vmap.australia.js"></script>
-        <script src="~/vendor/jqvmap/maps/continents/jquery.vmap.europe.js"></script>
-        <script src="~/vendor/jqvmap/maps/continents/jquery.vmap.north-america.js"></script>
-        <script src="~/vendor/jqvmap/maps/continents/jquery.vmap.south-america.js"></script>
+    <!-- Vendor -->
+    <script src="~/vendor/jquery/jquery.js"></script>
+    <script src="~/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.js"></script>
+    <script src="~/vendor/nanoscroller/nanoscroller.js"></script>
+    <script src="~/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/vendor/magnific-popup/magnific-popup.js"></script>
+    <script src="~/vendor/jquery-placeholder/jquery.placeholder.js"></script>
 
-        <!-- Theme Base, Components and Settings -->
-        <script src="~/javascripts/theme.js"></script>
+    <!-- Specific Page Vendor -->
+    <script src="~/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="~/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
+    <script src="~/vendor/jquery-appear/jquery.appear.js"></script>
+    <script src="~/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+    <script src="~/vendor/jquery-easypiechart/jquery.easypiechart.js"></script>
+    <script src="~/vendor/flot/jquery.flot.js"></script>
+    <script src="~/vendor/flot-tooltip/jquery.flot.tooltip.js"></script>
+    <script src="~/vendor/flot/jquery.flot.pie.js"></script>
+    <script src="~/vendor/flot/jquery.flot.categories.js"></script>
+    <script src="~/vendor/flot/jquery.flot.resize.js"></script>
+    <script src="~/vendor/jquery-sparkline/jquery.sparkline.js"></script>
+    <script src="~/vendor/raphael/raphael.js"></script>
+    <script src="~/vendor/morris/morris.js"></script>
+    <script src="~/vendor/gauge/gauge.js"></script>
+    <script src="~/vendor/snap-svg/snap.svg.js"></script>
+    <script src="~/vendor/liquid-meter/liquid.meter.js"></script>
+    <script src="~/vendor/jqvmap/jquery.vmap.js"></script>
+    <script src="~/vendor/jqvmap/data/jquery.vmap.sampledata.js"></script>
+    <script src="~/vendor/jqvmap/maps/jquery.vmap.world.js"></script>
+    <script src="~/vendor/jqvmap/maps/continents/jquery.vmap.africa.js"></script>
+    <script src="~/vendor/jqvmap/maps/continents/jquery.vmap.asia.js"></script>
+    <script src="~/vendor/jqvmap/maps/continents/jquery.vmap.australia.js"></script>
+    <script src="~/vendor/jqvmap/maps/continents/jquery.vmap.europe.js"></script>
+    <script src="~/vendor/jqvmap/maps/continents/jquery.vmap.north-america.js"></script>
+    <script src="~/vendor/jqvmap/maps/continents/jquery.vmap.south-america.js"></script>
+    <script src="~/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
 
-        <!-- Theme Custom -->
-        <script src="~/javascripts/theme.custom.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js"></script>
+    <!-- Theme Base, Components and Settings -->
+    <script src="~/javascripts/theme.js"></script>
 
-        <!-- Theme Initialization Files -->
-        <script src="~/javascripts/theme.init.js"></script>
+    <!-- Theme Custom -->
+    <script src="~/javascripts/theme.custom.js"></script>
 
-        @*<environment include="Development">
+    <!-- Theme Initialization Files -->
+    <script src="~/javascripts/theme.init.js"></script>
+
+    <script>
+        var dtSettings = {
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese.json"
+            }
+        }</script>
+
+    @*<environment include="Development">
             <script src="~/lib/jquery/dist/jquery.js"></script>
             <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
             <script src="~/js/site.js" asp-append-version="true"></script>
@@ -150,6 +164,6 @@
             <script src="~/js/site.min.js" asp-append-version="true"></script>
         </environment>*@
 
-        @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

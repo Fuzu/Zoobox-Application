@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ZooboxApplication.Data;
 using ZooboxApplication.Models;
 
 namespace ZooboxApplication.Areas.Identity.Pages.Account.Manage
@@ -17,15 +22,18 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly IHostingEnvironment _env;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IHostingEnvironment env)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _env = env;
         }
 
         public string Username { get; set; }
@@ -34,6 +42,9 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account.Manage
 
         [TempData]
         public string StatusMessage { get; set; }
+
+
+
 
         [BindProperty]
         public InputModel Input { get; set; }
@@ -47,6 +58,13 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Telemóvel")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Imagem")]
+            public String ImageFile { get; set; }
+
+            
+            public IFormFile Image { get; set; }
+
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -60,13 +78,15 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var email = await _userManager.GetEmailAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
+            
             Username = userName;
 
             Input = new InputModel
             {
                 Email = email,
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                ImageFile = user.ImageFile,
+                Image = user.Image
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -86,16 +106,32 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
+            if (Input.Image != null)
+            {
+
+                string path = Path.Combine(_env.WebRootPath, "images/upload/" + Input.Image.FileName);
+
+                using (var fs = new FileStream(path, FileMode.Create))
+                {
+                    Input.Image.CopyTo(fs);
+                }
+
+                user.ImageFile = "/images/upload/" + Input.Image.FileName;
+                var setUpdate = _userManager.UpdateAsync(user);
+            }
+            
 
             var email = await _userManager.GetEmailAsync(user);
             if (Input.Email != email)
             {
-                var setEmailResult = await _userManager.SetEmailAsync(user, Input.Email);
-                if (!setEmailResult.Succeeded)
-                {
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    throw new InvalidOperationException($"Unexpected error occurred setting email for user with ID '{userId}'.");
-                }
+                //var setEmailResult = await _userManager.SetEmailAsync(user, Input.Email);
+                //if (!setEmailResult.Succeeded)
+                //{
+                //    var userId = await _userManager.GetUserIdAsync(user);
+                //    throw new InvalidOperationException($"Unexpected error occurred setting email for user with ID '{userId}'.");
+                //}
+                user.Email = Input.Email;
+                var setUpdate = await _userManager.UpdateAsync(user);
             }
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
@@ -108,6 +144,8 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account.Manage
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
+
+           
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
@@ -137,7 +175,7 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account.Manage
                 values: new { userId = userId, code = code },
                 protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
-                email,
+                Input.Email,
                 "Confirma o seu email",
                 $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Por favor confirma o teu email.</a>.");
 

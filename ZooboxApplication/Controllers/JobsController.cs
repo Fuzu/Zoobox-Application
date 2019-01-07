@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +15,12 @@ namespace ZooboxApplication.Controllers
     public class JobsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IEmailSender _emailSender;
 
-        public JobsController(ApplicationDbContext context)
+        public JobsController(ApplicationDbContext context, IEmailSender emailSender)
         {
             _context = context;
+            _emailSender = emailSender;
         }
 
         // GET: Jobs
@@ -25,6 +29,9 @@ namespace ZooboxApplication.Controllers
             var applicationDbContext = _context.Job.Include(j => j.ApplicationUser);
             return View(await applicationDbContext.ToListAsync());
         }
+
+        
+
 
         // GET: Jobs/Details/5
         public async Task<IActionResult> Details(string id)
@@ -63,10 +70,25 @@ namespace ZooboxApplication.Controllers
             {
                 _context.Add(job);
                 await _context.SaveChangesAsync();
+                var callbackUrl = Request.Scheme +"://"+ Request.Host.Value + "/jobs/Edit/"+job.Id;
+                var email = _context.Users.Find(job.UserId).Email;
+                await _emailSender.SendEmailAsync(
+                   email,
+                   "Zoobox - Nova Tarefa",
+                   $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Por favor veja a tarefa criada.</a>.");
+                ViewData["ApplicationUsers"] = new SelectList(_context.ApplicationUser, "Id", "Email");
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ApplicationUsers"] = new SelectList(_context.ApplicationUser, "Id", "Email");
+
             return View(job);
+        }
+
+        [HttpPost]
+
+        public JsonResult Olha([Bind("Id,Abbreviation,Description,BeginDay,EndDay,State,UserId")] Job job)
+        {
+
+            return Json(job);
         }
 
         // GET: Jobs/Edit/5

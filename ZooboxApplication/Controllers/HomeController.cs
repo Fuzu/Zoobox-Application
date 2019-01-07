@@ -13,7 +13,9 @@ using Microsoft.AspNetCore.Mvc;
 using ZooboxApplication.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using ZooboxApplication.Data;
 
+using Microsoft.EntityFrameworkCore;
 
 namespace ZooboxApplication.Controllers
 {
@@ -32,11 +34,32 @@ namespace ZooboxApplication.Controllers
         ///
         /// <returns>   Retorna a view da página se o utilizador estiver logado. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///
+
+        private readonly ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         [Authorize]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+
+            // GET: Jobs
+          
+            var applicationDbContext = _context.Job.Include(j => j.ApplicationUser).Where(s => s.State.Equals("Activo"));
+
+            var animals = from m in _context.Animal
+                          select m;
+            ViewBag.AmountAnimals   = animals.Count();
+
+            var users = from m in _context.Users
+                          select m;
+            ViewBag.AmountUsers = users.Count();
+
+            return View(await applicationDbContext.ToListAsync());
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////

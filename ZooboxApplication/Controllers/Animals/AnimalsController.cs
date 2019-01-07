@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -21,10 +23,11 @@ namespace ZooboxApplication.Controllers.Animals
     public class AnimalsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public AnimalsController(ApplicationDbContext context)
+        private readonly IHostingEnvironment _env;
+        public AnimalsController(ApplicationDbContext context, IHostingEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,7 +40,9 @@ namespace ZooboxApplication.Controllers.Animals
         public async Task<IActionResult> Index(string searchString, string breed)
         {
             //var applicationDbContext = _context.Animal.Include(a => a.DiseaseName).Include(a => a.RaceName).Include(a => a.Statename);
-            var animals = from m in _context.Animal
+            var animals = from m in _context.Animal.Include(a => a.DiseaseName)
+                .Include(a => a.RaceName)
+                .Include(a => a.Statename)
                           select m;
 
             var raceList = from r in _context.Race
@@ -113,8 +118,18 @@ namespace ZooboxApplication.Controllers.Animals
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Race,Disease,EntranceDay,Location,State")] Animal animal)
+        public async Task<IActionResult> Create([Bind("Id,Name,Race,Disease,EntranceDay,Location,State,Image")] Animal animal)
         {
+            if(animal.Image != null)
+            {
+                string path = Path.Combine(_env.WebRootPath, "images/upload/"+animal.Image.FileName);
+               
+                using (var fs = new FileStream(path, FileMode.Create))
+                {
+                    animal.Image.CopyTo(fs);
+                }
+                animal.ImageFile = "/images/upload/"+animal.Image.FileName;
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(animal);
@@ -151,11 +166,24 @@ namespace ZooboxApplication.Controllers.Animals
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Race,Disease,EntranceDay,Location,State")] Animal animal)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Race,Disease,EntranceDay,Location,State,Image")] Animal animal)
         {
+
+
             if (id != animal.Id)
             {
                 return NotFound();
+            }
+
+            if (animal.Image != null)
+            {
+                string path = Path.Combine(_env.WebRootPath, "images/upload/" + animal.Image.FileName);
+
+                using (var fs = new FileStream(path, FileMode.Create))
+                {
+                    animal.Image.CopyTo(fs);
+                }
+                animal.ImageFile = "/images/upload/" + animal.Image.FileName;
             }
 
             if (ModelState.IsValid)
