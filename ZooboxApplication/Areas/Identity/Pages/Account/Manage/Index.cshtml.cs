@@ -63,6 +63,12 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Telemóvel")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Imagem")]
+            public String ImageFile { get; set; }
+
+
+            public IFormFile Image { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -171,11 +177,11 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account.Manage
                 values: new { userId = userId, code = code },
                 protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
-                email,
+                Input.Email,
                 "Confirma o seu email",
                 $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Por favor confirma o teu email.</a>.");
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            StatusMessage = "Foi enviado com sucesso para o seu email.";
             return RedirectToPage();
         }
     }
