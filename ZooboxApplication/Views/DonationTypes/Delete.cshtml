@@ -1,0 +1,27 @@
+﻿@model ZooboxApplication.Models.Animals.DonationType
+
+@{
+    ViewData["Title"] = "Eliminar";
+}
+
+<h2>Eliminar</h2>
+
+<h3>Tem a certeza que pretende eliminar?</h3>
+<div>
+    <h4>DonationType</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DonationTypeName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DonationTypeName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Eliminar" class="btn btn-default" /> |
+        <a asp-action="Index">Voltar</a>
+    </form>
+</div>

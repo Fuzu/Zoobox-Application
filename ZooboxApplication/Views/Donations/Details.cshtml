@@ -1,0 +1,36 @@
+﻿@model ZooboxApplication.Models.Donations.Donation
+
+@{
+    ViewData["Title"] = "Informação";
+}
+
+<h2>Informação</h2>
+
+<div>
+    <h4>Doação</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DonationTypeName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DonationTypeName.DonationTypeName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Email)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    <a asp-action="Index">Voltar</a>
+</div>

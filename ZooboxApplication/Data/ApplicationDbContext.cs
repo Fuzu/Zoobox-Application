@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using ZooboxApplication.Models;
 using ZooboxApplication.Models.Animals;
 using ZooboxApplication.Models.ViewModel;
+using ZooboxApplication.Models.Donations;
 
 namespace ZooboxApplication.Data
 {
@@ -23,6 +24,8 @@ namespace ZooboxApplication.Data
         public DbSet<ZooboxApplication.Models.Job> Job{ get; set; }
         public DbSet<ZooboxApplication.Models.ApplicationUser> ApplicationUser { get; set; }
         public DbSet<ZooboxApplication.Models.ViewModel.UserViewModel> UserViewModel { get; set; }
+        public DbSet<ZooboxApplication.Models.Animals.DonationType> DonationType { get; set; }
+        public DbSet<ZooboxApplication.Models.Donations.Donation> Donation { get; set; }
         //public DbSet<ZooboxApplication.Models.UserCustom> UserList { get; set; }
     }
 }

@@ -127,7 +127,7 @@ namespace ZooboxApplication.Controllers
             return View(user);
         }
 
-        // POST: Animals/Delete/5
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -142,6 +142,26 @@ namespace ZooboxApplication.Controllers
         private bool EmailExists(string email)
         {
             return _context.Users.Any(e => e.Email == email);
+        }
+
+        // GET: Users/Details/5
+        public async Task<IActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+
+
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
         }
     }
 }

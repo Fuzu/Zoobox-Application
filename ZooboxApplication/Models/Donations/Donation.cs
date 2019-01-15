@@ -26,6 +26,7 @@ namespace ZooboxApplication.Models.Donations
 
         [ForeignKey("ApplicationUser")]
         public string UserId { get; set; }
+
         [Display(Name = "Utilizador")]
         public virtual ApplicationUser ApplicationUser { get; set; }
 
