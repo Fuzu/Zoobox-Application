@@ -24,6 +24,14 @@ namespace ZooboxApplication.Models.Donations
         [Required(ErrorMessage = "Não pode estar vazia")]
         public String Quantity { get; set; }
 
+        [Display(Name = "Descrição")]
+        [Required(ErrorMessage = "Não pode estar vazia")]
+        public String Description { get; set; }
+
+        [Display(Name = "Estado")]
+        [Required(ErrorMessage = "Não pode estar vazia")]
+        public String Status { get; set; }
+
         [ForeignKey("ApplicationUser")]
         public string UserId { get; set; }
 

@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Registar novo tipo doação</a>
 </p>
-<table class="table">
+<table class="table" id="DonationsList">
     <thead>
         <tr>
             <th>
@@ -19,17 +19,29 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DonationTypeName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id"><span class="glyphicon glyphicon-pencil text-muted"></span></a> |
-                <a asp-action="Details" asp-route-id="@item.Id"><span class="glyphicon glyphicon-info-sign text-primary"></span></a> |
-                <a asp-action="Delete" asp-route-id="@item.Id"><span class="glyphicon glyphicon-trash"></span></a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DonationTypeName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id"><span class="glyphicon glyphicon-pencil text-muted"></span></a> |
+                    <a asp-action="Details" asp-route-id="@item.Id"><span class="glyphicon glyphicon-info-sign text-primary"></span></a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id"><span class="glyphicon glyphicon-trash"></span></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+@section scripts
+    {
+
+    <script>
+        $(document).ready(function () {
+            $('#DonationsList').DataTable(dtSettings);
+        });
+    </script>
+}
