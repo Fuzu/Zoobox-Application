@@ -14,9 +14,11 @@ namespace TestZoobox
         public string Site = "https://localhost:44381";
 
         public IConfiguration Configuration { get; }
-
+        [TestMethod]
         public void CreateAnimals()
         {
+            TestHelper helper = new TestHelper(true);
+
             var animal = new Animal();
 
             animal.Name = "teste Animal";
@@ -26,7 +28,8 @@ namespace TestZoobox
             animal.Disease = 1;
             animal.EntranceDay = DateTime.Now;
 
-            //var program = new ZooboxApplication.Startup();
+             var response = helper.Context.Add(animal);
+           
 
         }
 

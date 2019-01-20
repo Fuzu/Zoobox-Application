@@ -25,7 +25,7 @@
     </div>
 
 </form>
-<table class="table">
+<table class="table" id="AnimalsList">
     <thead>
         <tr>
             <th>
@@ -81,3 +81,14 @@
         }
     </tbody>
 </table>
+
+
+@section scripts
+    {
+
+    <script>
+        $(document).ready(function () {
+            $('#AnimalsList').DataTable(dtSettings);
+        });
+    </script>
+}

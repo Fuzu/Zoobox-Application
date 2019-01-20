@@ -1,21 +1,22 @@
-﻿@model IEnumerable<ZooboxApplication.Models.Job>
+﻿@model List<Object>
 @{
     ViewData["Title"] = "Dashboard";
 
-        var roleId = UserManager.GetUserAsync(User).Result.Role;
-        if (roleId == "1")
-        {
-            ViewData["Role"] = "Administrador";
-        }
-        else if (roleId == "2")
-        {
-            ViewData["Role"] = "Funcionário";
-        }
-        else
-        {
-            ViewData["Role"] = "Voluntário";
-        }
-    
+    var roleId = UserManager.GetUserAsync(User).Result.Role;
+    if (roleId == "1")
+    {
+        ViewData["Role"] = "Administrador";
+    }
+    else if (roleId == "2")
+    {
+        ViewData["Role"] = "Funcionário";
+    }
+    else
+    {
+        ViewData["Role"] = "Voluntário";
+    }
+    var Jobs = (IEnumerable<ZooboxApplication.Models.Job>) Model[0];
+    var Payments = (IEnumerable<ZooboxApplication.Models.Donations.Donation>)Model[1];
 }
 @using Microsoft.AspNetCore.Identity
 
@@ -165,32 +166,34 @@
                             <div id="collapse1One" class="accordion-body collapse in">
                                 <div class="panel-body">
                                     <ul class="widget-todo-list ui-sortable">
-                                        @foreach (var item in Model)
+                                        @foreach (var item in Jobs)
                                         {
-                                        <li>
-                                            <div class="checkbox-custom checkbox-default">
-                                                <input type="checkbox"  id="todoListItem1" class="todo-check">
-                                                <label class="todo-label line-through" for="todoListItem1"><span>@Html.DisplayFor(modelItem => item.Abbreviation)</span></label>
-                                            </div>
-                                            <div class="col-12" style="padding-bottom: 5px">
-                                                <label class="label label-primary pull-right">@Html.DisplayFor(modelItem => item.BeginDay)</label>
-                                            </div>
-                                            <div class="todo-actions">
-                                                @*<a class="todo-remove" href="#">
-                                                    <i class="fa fa-times"></i>
-                                                </a>*@
-                                            </div>
-                                        </li>
+                                            <li>
+                                                <div class="checkbox-custom checkbox-default">
+                                                    <input type="checkbox" id="todoListItem1" class="todo-check">
+                                                    <label class="todo-label line-through" for="todoListItem1"><span>@Html.DisplayFor(modelItem => item.Abbreviation)</span></label>
+                                                </div>
+                                                <div class="col-12" style="padding-bottom: 5px">
+                                                    <label class="label label-primary pull-right">@Html.DisplayFor(modelItem => item.BeginDay)</label>
+                                                </div>
+                                                <div class="todo-actions">
+                                                    @*<a class="todo-remove" href="#">
+                                                            <i class="fa fa-times"></i>
+                                                        </a>*@
+                                                </div>
+                                            </li>
                                         }
                                     </ul>
                                     <hr class="solid mt-sm mb-lg">
-                                        
+
                                     <div class="col-12">
                                         <a class="btn btn-primary btn-sm" href="/jobs/create" role="button">Adicionar</a>
                                     </div>
-                                    
+
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                 </section>
@@ -200,10 +203,92 @@
     </div>
 
 
+
+    <div class="col-md-4">
+        <section class="panel">
+            <header class="panel-heading panel-heading-transparent">
+                <div class="panel-actions">
+                    <a href="#" class="fa fa-caret-down"></a>
+                    <a href="#" class="fa fa-times"></a>
+                </div>
+                <h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">As Minhas Doações</h5>
+            </header>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    @if(Payments.Count() > 0)
+                    {
+                    <table class="table table-striped mb-none">
+                        <thead>
+                            <tr>
+                                <th>Descrição</th>
+                                <th>Valor</th>
+                                <th>Estado</th>
+                                <th>Pagar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Payments)
+                            {
+                                @if (UserManager.GetUserAsync(User).Result.Id != item.UserId)
+                                {
+                                    continue;
+                                }
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Quantity) €</td>
+                                @if (item.Status == "rejected")
+                                {
+                                    <td><span class="label label-danger">Não Realizado</span></td>
+                                }
+                                else if (item.Status == "success")
+                                {
+                                    <td><span class="label label-success">Realizado</span></td>
+                                }
+                                else
+                                {
+                                    <td><span class="label label-warning">Pendente</span></td>
+                                }
+
+                                    <td>
+                                        @if (item.Status == "pending")
+                                        {
+                                            <form action="your-server-side-code" method="POST">
+                                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                                        data-key="pk_test_P3oZe3UmvYIrsktFKw6VWAf2"
+                                                        data-amount="@Html.DisplayFor(modelItem => item.Quantity)00"
+                                                        data-name="Zoobox"
+                                                        data-description="Payments"
+                                                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                                        data-locale="en"
+                                                        data-currency="eur">
+                                                </script>
+                                            </form>
+
+                                        }
+                                    </td>
+                                </tr>
+                               
+                            }
+                            
+                        </tbody>
+                    </table>
+                    }else
+                    {
+                        <p>Não existem doações</p>
+                    }
+                </div>
+            </div>
+        </section>
+    </div>
+   
+
     @section scripts
         {
+        <script>
+            $('.stripe-button-el').html('<span style="display: block; min-height: 30px;">Pagar</span>')
+        </script>
 
-     
     }
 </div>
 

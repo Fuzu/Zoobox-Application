@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using ZooboxApplication.Data;
 
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 
 namespace ZooboxApplication.Controllers
 {
@@ -49,7 +50,8 @@ namespace ZooboxApplication.Controllers
 
             // GET: Jobs
           
-            var applicationDbContext = _context.Job.Include(j => j.ApplicationUser).Where(s => s.State.Equals("Activo"));
+            var Jobs = _context.Job.Include(j => j.ApplicationUser).Where(s => s.State.Equals("Activo"));
+            var Payments = _context.Donation.Include(j => j.ApplicationUser);
 
             var animals = from m in _context.Animal
                           select m;
@@ -58,8 +60,14 @@ namespace ZooboxApplication.Controllers
             var users = from m in _context.Users
                           select m;
             ViewBag.AmountUsers = users.Count();
+            var model = new List<Object>
+            {
+                 await Jobs.ToListAsync(),
+                 await Payments.ToListAsync()
+            };
 
-            return View(await applicationDbContext.ToListAsync());
+     
+            return View(model);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////

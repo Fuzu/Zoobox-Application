@@ -14,7 +14,7 @@ using Assert = NUnit.Framework.Assert;
 namespace TestZoobox
 {
     
-    [TestClass]
+    
     public class Sprint3
     {
         public string Site = "https://localhost:53076";

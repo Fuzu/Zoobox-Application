@@ -59,7 +59,7 @@ namespace ZooboxApplication.Controllers.Donations
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DonationType,Quantity,UserId")] Donation donation)
+        public async Task<IActionResult> Create([Bind("Id,DonationType,Description,Status,Quantity,UserId")] Donation donation)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace ZooboxApplication.Controllers.Donations
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DonationType,Quantity,UserId")] Donation donation)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DonationType,Description,Status,Quantity,UserId")] Donation donation)
         {
             if (id != donation.Id)
             {
