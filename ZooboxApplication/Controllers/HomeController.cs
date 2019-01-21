@@ -70,6 +70,30 @@ namespace ZooboxApplication.Controllers
             return View(model);
         }
 
+        [Authorize]
+        public IActionResult Payment(List<string> model)
+        {
+            // Set your secret key: remember to change this to your live secret key in production
+            // See your keys here: https://dashboard.stripe.com/account/apikeys
+            StripeConfiguration.SetApiKey("sk_test_tjnJtycE4g8eavRpdGYvQiHc");
+
+            // Token is created using Checkout or Elements!
+            // Get the payment token submitted by the form:
+            var token = (string) model[1]; // Using ASP.NET MVC
+
+            var options = new ChargeCreateOptions
+            {
+                Amount = Convert.ToInt32(model[0]),
+                Currency = "eur",
+                Description = "Doações Zoobox",
+                SourceId = token,
+            };
+            var service = new ChargeService();
+            Charge charge = service.Create(options);
+
+            return View();
+        }
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Gets the about. </summary>
         ///
