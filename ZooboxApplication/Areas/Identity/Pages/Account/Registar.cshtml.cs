@@ -53,6 +53,7 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account
             new SelectListItem { Value = "Administrator", Text = "Administrador" },
             new SelectListItem { Value = "Employe", Text = "Funcionário" },
             new SelectListItem { Value = "Voluntary", Text = "Voluntário"  },
+            new SelectListItem { Value = "Client", Text = "Cliente"  },
         };
 
         public class InputModel
