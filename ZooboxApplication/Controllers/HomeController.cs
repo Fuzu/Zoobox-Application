@@ -70,28 +70,47 @@ namespace ZooboxApplication.Controllers
             return View(model);
         }
 
+        public class PaymentModel
+        {
+            public string stripeTokenType { get; set; }
+            public string stripeToken { get; set; }
+            public string stripeEmail { get; set; }
+        }
+
         [Authorize]
-        public IActionResult Payment(List<string> model)
+        [HttpPost]
+        public IActionResult Payment(int id, [Bind("stripeTokenType, stripeToken, stripeEmail")]PaymentModel model)
         {
             // Set your secret key: remember to change this to your live secret key in production
             // See your keys here: https://dashboard.stripe.com/account/apikeys
             StripeConfiguration.SetApiKey("sk_test_tjnJtycE4g8eavRpdGYvQiHc");
 
+            var donation = _context.Donation.Find(id);
+
             // Token is created using Checkout or Elements!
             // Get the payment token submitted by the form:
-            var token = (string) model[1]; // Using ASP.NET MVC
+            var token = (string) model.stripeToken; // Using ASP.NET MVC
 
             var options = new ChargeCreateOptions
             {
-                Amount = Convert.ToInt32(model[0]),
+                Amount = Convert.ToInt32(donation.Quantity+"00"),
                 Currency = "eur",
-                Description = "Doações Zoobox",
+                Description = donation.Description,
                 SourceId = token,
             };
             var service = new ChargeService();
             Charge charge = service.Create(options);
-
-            return View();
+            if(charge.Status == "succeeded")
+            {
+                donation.Status = "success";
+            }
+            else
+            {
+                donation.Status = "reject";
+            }
+            _context.Donation.Update(donation);
+            _context.SaveChangesAsync();
+            return Redirect("/");
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////

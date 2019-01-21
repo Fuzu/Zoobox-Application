@@ -253,7 +253,7 @@
                                     <td>
                                         @if (item.Status == "pending")
                                         {
-                                            @*<form action="Home/Payment" method="POST">*@
+                                            <form action="Home/Payment/@item.Id" method="POST">
                                                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                                         data-key="pk_test_P3oZe3UmvYIrsktFKw6VWAf2"
                                                         data-amount="@Html.DisplayFor(modelItem => item.Quantity)00"
@@ -263,7 +263,7 @@
                                                         data-locale="en"
                                                         data-currency="eur">
                                                 </script>
-                                            @*</form>*@
+                                            </form>
 
                                         }
                                     </td>
