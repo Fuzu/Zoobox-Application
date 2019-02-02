@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ZooboxApplication.Data;
+using ZooboxApplication.Models;
 using ZooboxApplication.Models.Adoptions;
 
 namespace ZooboxApplication.Controllers.Adoptions
@@ -63,11 +64,29 @@ namespace ZooboxApplication.Controllers.Adoptions
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,AdoptionDate,Animal,UserId,AdoptionType")] Adoption adoption)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid )
             {
-                _context.Add(adoption);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                Animal animal = _context.Animal.FirstOrDefault(a => a.Id == adoption.Animal);
+
+                if (animal == null)
+                {
+                    _context.Add(adoption);
+                    await _context.SaveChangesAsync();
+
+                    if (adoption.AdoptionType == 3)
+                    {
+                        animal.State = 3;
+                        _context.Update(animal);
+                        await _context.SaveChangesAsync();
+                    }
+
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Este animal já tem um processo de adopção.");
+                    return View(adoption);
+                }
             }
             ViewData["AdoptionType"] = new SelectList(_context.AdoptionType, "Id", "AdoptionTypeName", adoption.AdoptionType);
             ViewData["Animal"] = new SelectList(_context.Animal, "Id", "Name", adoption.Animal);
@@ -88,9 +107,9 @@ namespace ZooboxApplication.Controllers.Adoptions
             {
                 return NotFound();
             }
-            ViewData["AdoptionType"] = new SelectList(_context.AdoptionType, "Id", "Id", adoption.AdoptionType);
-            ViewData["Animal"] = new SelectList(_context.Animal, "Id", "Id", adoption.Animal);
-            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id", adoption.UserId);
+            ViewData["AdoptionType"] = new SelectList(_context.AdoptionType, "Id", "AdoptionTypeName", adoption.AdoptionType);
+            ViewData["Animal"] = new SelectList(_context.Animal, "Id", "Name", adoption.Animal);
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Email", adoption.UserId);
             return View(adoption);
         }
 
@@ -112,6 +131,14 @@ namespace ZooboxApplication.Controllers.Adoptions
                 {
                     _context.Update(adoption);
                     await _context.SaveChangesAsync();
+
+                    if (adoption.AdoptionType == 3)
+                    {
+                        Animal animal = _context.Animal.FirstOrDefault(a => a.Id == adoption.Animal);
+                        animal.State = 3;
+                        _context.Update(animal);
+                        await _context.SaveChangesAsync();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -126,9 +153,9 @@ namespace ZooboxApplication.Controllers.Adoptions
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AdoptionType"] = new SelectList(_context.AdoptionType, "Id", "Id", adoption.AdoptionType);
-            ViewData["Animal"] = new SelectList(_context.Animal, "Id", "Id", adoption.Animal);
-            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id", adoption.UserId);
+            ViewData["AdoptionType"] = new SelectList(_context.AdoptionType, "Id", "AdoptionTypeName", adoption.AdoptionType);
+            ViewData["Animal"] = new SelectList(_context.Animal, "Id", "Name", adoption.Animal);
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Email", adoption.UserId);
             return View(adoption);
         }
 
