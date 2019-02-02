@@ -15,7 +15,7 @@
     {
         ViewData["Role"] = "Voluntário";
     }
-    var Jobs = (IEnumerable<ZooboxApplication.Models.Job>) Model[0];
+    var Jobs = (IEnumerable<ZooboxApplication.Models.Job>)Model[0];
     var Payments = (IEnumerable<ZooboxApplication.Models.Donations.Donation>)Model[1];
 }
 @using Microsoft.AspNetCore.Identity
@@ -25,108 +25,7 @@
 
 
 <div class="row">
-    <div class="col-md-3">
-        <br />
-        <h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">Informações</h5>
-        <section class="panel panel-featured-left panel-featured-primary">
-            <div class="panel-body">
-                <div class="widget-summary">
-                    <div class="widget-summary-col widget-summary-col-icon">
-                        <div class="summary-icon bg-primary">
-                            <i class="fa fa-paw"></i>
-                        </div>
-                    </div>
-                    <div class="widget-summary-col">
-                        <div class="summary">
-                            <h4 class="title">Animais em Sistema</h4>
-                            <div class="info">
-                                <strong class="amount">@ViewBag.AmountAnimals</strong>
-                            </div>
-                        </div>
-                        <div class="summary-footer">
-                            <a class="text-muted text-uppercase">Ver Todo</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="panel panel-featured-left panel-featured-secondary">
-            <div class="panel-body">
-                <div class="widget-summary">
-                    <div class="widget-summary-col widget-summary-col-icon">
-                        <div class="summary-icon bg-secondary">
-                            <i class="fa fa-eur"></i>
-                        </div>
-                    </div>
-                    <div class="widget-summary-col">
-                        <div class="summary">
-                            <h4 class="title">Total Doações</h4>
-                            <div class="info">
-                                <strong class="amount">@ViewBag.DonationAmount €</strong>
-                            </div>
-                        </div>
-                        <div class="summary-footer">
-                            <a class="text-muted text-uppercase">Ver tudo</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="panel panel-featured-left panel-featured-tertiary">
-            <div class="panel-body">
-                <div class="widget-summary">
-                    <div class="widget-summary-col widget-summary-col-icon">
-                        <div class="summary-icon bg-tertiary">
-                            <i class="fa fa-th-large"></i>
-                        </div>
-                    </div>
-                    <div class="widget-summary-col">
-                        <div class="summary">
-                            <h4 class="title">Ração em Stock</h4>
-                            <div class="info">
-                                <strong class="amount">@ViewBag.sumDonationsKG Kg</strong>
-                            </div>
-                        </div>
-                        <div class="summary-footer">
-                            <a class="text-muted text-uppercase">Ver Tudo</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="panel panel-featured-left panel-featured-quartenary">
-            <div class="panel-body">
-                <div class="widget-summary">
-                    <div class="widget-summary-col widget-summary-col-icon">
-                        <div class="summary-icon bg-quartenary">
-                            <i class="fa fa-user"></i>
-                        </div>
-                    </div>
-                    <div class="widget-summary-col">
-                        <div class="summary">
-                            <h4 class="title">Total de Utilizadores</h4>
-                            <div class="info">
-                                <strong class="amount">@ViewBag.AmountUsers</strong>
-                                @*<span class="text-primary">(4 Funcionários)</span>*@
-                            </div>
-                        </div>
-                        <div class="summary-footer">
-                            <a class="text-muted text-uppercase">Ver Tudo</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </div>
-
     <!-- As Minhas Tarefas -->
-
-
-
     <div class="col-md-4">
         <section class="panel panel-transparent">
             <header class="panel-heading" style="padding-bottom: 0px">
@@ -215,65 +114,66 @@
             </header>
             <div class="panel-body">
                 <div class="table-responsive">
-                    @if(Payments.Count() > 0)
+                    @if (Payments.Count() > 0)
                     {
-                    <table class="table table-striped mb-none">
-                        <thead>
-                            <tr>
-                                <th>Descrição</th>
-                                <th>Valor</th>
-                                <th>Estado</th>
-                                <th>Pagar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            @foreach (var item in Payments)
-                            {
-                                @if (UserManager.GetUserAsync(User).Result.Id != item.UserId)
-                                {
-                                    continue;
-                                }
-                            <tr>
-                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Quantity) €</td>
-                                @if (item.Status == "rejected")
-                                {
-                                    <td><span class="label label-danger">Não Realizado</span></td>
-                                }
-                                else if (item.Status == "success")
-                                {
-                                    <td><span class="label label-success">Realizado</span></td>
-                                }
-                                else
-                                {
-                                    <td><span class="label label-warning">Pendente</span></td>
-                                }
-
-                                    <td>
-                                        @if (item.Status == "pending")
-                                        {
-                                            <form action="Home/Payment/@item.Id" method="POST">
-                                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                                        data-key="pk_test_P3oZe3UmvYIrsktFKw6VWAf2"
-                                                        data-amount="@Html.DisplayFor(modelItem => item.Quantity)00"
-                                                        data-name="Zoobox"
-                                                        data-description="Payments"
-                                                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-                                                        data-locale="en"
-                                                        data-currency="eur">
-                                                </script>
-                                            </form>
-
-                                        }
-                                    </td>
+                        <table class="table table-striped mb-none">
+                            <thead>
+                                <tr>
+                                    <th>Descrição</th>
+                                    <th>Valor</th>
+                                    <th>Estado</th>
+                                    <th>Pagar</th>
                                 </tr>
-                               
-                            }
-                            
-                        </tbody>
-                    </table>
-                    }else
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Payments)
+                                {
+                                    @if (UserManager.GetUserAsync(User).Result.Id != item.UserId)
+                                    {
+                                        continue;
+                                    }
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity) €</td>
+                                        @if (item.Status == "rejected")
+                                        {
+                                            <td><span class="label label-danger">Não Realizado</span></td>
+                                        }
+                                        else if (item.Status == "success")
+                                        {
+                                            <td><span class="label label-success">Realizado</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td><span class="label label-warning">Pendente</span></td>
+                                        }
+
+                                        <td>
+                                            @if (item.Status == "pending")
+                                            {
+                                                <form action="Home/Payment/@item.Id" method="POST">
+                                                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                                            data-key="pk_test_P3oZe3UmvYIrsktFKw6VWAf2"
+                                                            data-amount="@Html.DisplayFor(modelItem => item.Quantity)00"
+                                                            data-name="Zoobox"
+                                                            data-description="Payments"
+                                                            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                                            data-locale="en"
+                                                            data-currency="eur">
+                                                    </script>
+                                                </form>
+
+                                            }
+                                        </td>
+                                    </tr>
+
+                                }
+
+                            </tbody>
+                        </table>
+                    }
+                    else
                     {
                         <p>Não existem doações</p>
                     }
@@ -281,7 +181,7 @@
             </div>
         </section>
     </div>
-   
+
 
     @section scripts
         {
@@ -290,5 +190,107 @@
         </script>
 
     }
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <section class="panel panel-featured-left panel-featured-primary">
+            <div class="panel-body">
+                <div class="widget-summary">
+                    <div class="widget-summary-col widget-summary-col-icon">
+                        <div class="summary-icon bg-primary">
+                            <i class="fa fa-paw"></i>
+                        </div>
+                    </div>
+                    <div class="widget-summary-col">
+                        <div class="summary">
+                            <h4 class="title">Animais em Sistema</h4>
+                            <div class="info">
+                                <strong class="amount">@ViewBag.AmountAnimals</strong>
+                            </div>
+                        </div>
+                        <div class="summary-footer">
+                            <a class="text-muted text-uppercase" href="/Animals/Index">Ver Tudo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="col-md-4">
+        <section class="panel panel-featured-left panel-featured-secondary">
+            <div class="panel-body">
+                <div class="widget-summary">
+                    <div class="widget-summary-col widget-summary-col-icon">
+                        <div class="summary-icon bg-secondary">
+                            <i class="fa fa-eur"></i>
+                        </div>
+                    </div>
+                    <div class="widget-summary-col">
+                        <div class="summary">
+                            <h4 class="title">Total Doações</h4>
+                            <div class="info">
+                                <strong class="amount">@ViewBag.DonationAmount €</strong>
+                            </div>
+                        </div>
+                        <div class="summary-footer">
+                            <a class="text-muted text-uppercase" href="/Donations/Index">Ver tudo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <section class="panel panel-featured-left panel-featured-tertiary">
+            <div class="panel-body">
+                <div class="widget-summary">
+                    <div class="widget-summary-col widget-summary-col-icon">
+                        <div class="summary-icon bg-tertiary">
+                            <i class="fa fa-th-large"></i>
+                        </div>
+                    </div>
+                    <div class="widget-summary-col">
+                        <div class="summary">
+                            <h4 class="title">Ração em Stock</h4>
+                            <div class="info">
+                                <strong class="amount">@ViewBag.sumDonationsKG Kg</strong>
+                            </div>
+                        </div>
+                        <div class="summary-footer">
+                            <a class="text-muted text-uppercase" href="/Donations/Index" >Ver Tudo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="col-md-4">
+        <section class="panel panel-featured-left panel-featured-quartenary">
+            <div class="panel-body">
+                <div class="widget-summary">
+                    <div class="widget-summary-col widget-summary-col-icon">
+                        <div class="summary-icon bg-quartenary">
+                            <i class="fa fa-user"></i>
+                        </div>
+                    </div>
+                    <div class="widget-summary-col">
+                        <div class="summary">
+                            <h4 class="title">Total de Utilizadores</h4>
+                            <div class="info">
+                                <strong class="amount">@ViewBag.AmountUsers</strong>
+                                @*<span class="text-primary">(4 Funcionários)</span>*@
+                            </div>
+                        </div>
+                        <div class="summary-footer">
+                            <a class="text-muted text-uppercase" href="/users" >Ver Tudo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 </div>
 

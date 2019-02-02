@@ -1,12 +1,11 @@
 ﻿@model ZooboxApplication.Models.Adoptions.Adoption
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar";
 }
 
-<h2>Edit</h2>
+<h2>Editar</h2>
 
-<h4>Adoption</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -34,14 +33,14 @@
                 <span asp-validation-for="AdoptionType" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Guardar" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
-
+</br>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar</a>
 </div>
 
 @section Scripts {

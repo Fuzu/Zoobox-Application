@@ -1,13 +1,13 @@
 ﻿@model ZooboxApplication.Models.Adoptions.Adoption
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
 }
 
-<h2>Details</h2>
+<h2>Detalhes</h2>
 
 <div>
-    <h4>Adoption</h4>
+    <h4>Adopção</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -20,23 +20,23 @@
             @Html.DisplayNameFor(model => model.AnimalName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.AnimalName.Id)
+            @Html.DisplayFor(model => model.AnimalName.Name)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.ApplicationUser)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ApplicationUser.Id)
+            @Html.DisplayFor(model => model.ApplicationUser.Email)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.AdoptionTypeName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.AdoptionTypeName.Id)
+            @Html.DisplayFor(model => model.AdoptionTypeName.AdoptionTypeName)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    <a asp-action="Index">Voltar</a>
 </div>
