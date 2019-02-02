@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZooboxApplication.Data;
 
 namespace ZooboxApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190202094656_adoptions")]
+    partial class adoptions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,31 +129,6 @@ namespace ZooboxApplication.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("ZooboxApplication.Models.Adoptions.Adoption", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("AdoptionDate");
-
-                    b.Property<int>("AdoptionType");
-
-                    b.Property<int>("Animal");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdoptionType");
-
-                    b.HasIndex("Animal");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Adoption");
                 });
 
             modelBuilder.Entity("ZooboxApplication.Models.Adoptions.AdoptionType", b =>
@@ -455,23 +432,6 @@ namespace ZooboxApplication.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("ZooboxApplication.Models.Adoptions.Adoption", b =>
-                {
-                    b.HasOne("ZooboxApplication.Models.Adoptions.AdoptionType", "AdoptionTypeName")
-                        .WithMany()
-                        .HasForeignKey("AdoptionType")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ZooboxApplication.Models.Animal", "AnimalName")
-                        .WithMany()
-                        .HasForeignKey("Animal")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ZooboxApplication.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("ZooboxApplication.Models.Animal", b =>
