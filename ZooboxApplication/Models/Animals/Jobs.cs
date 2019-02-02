@@ -23,10 +23,12 @@ namespace ZooboxApplication.Models
         [Required(ErrorMessage = "Não pode estar vazia")]
         public String Description { get; set; }
 
+        [Range(typeof(DateTime), "1/1/1966", "1/1/3000")]
         [DataType(DataType.Date)]
         [Display(Name = "Data Entrada")]
         public DateTime BeginDay { get; set; }
 
+        [Range(typeof(DateTime), "1/1/1966", "1/1/3000")]
         [DataType(DataType.Date)]
         [Display(Name = "Data Fim")]
         [Required(ErrorMessage = "Não pode estar vazia")]
@@ -49,6 +51,16 @@ namespace ZooboxApplication.Models
             {
                 yield return
                   new ValidationResult("Data Final tem de ser maior que a inicial", new[] { "EndDay" });
+            }
+            if(BeginDay.Year > DateTime.Now.Year)
+            {
+                yield return
+                 new ValidationResult("Data Inicial tem de ser igual ao ano em vigor");
+            }
+            if (EndDay.Year > DateTime.Now.Year)
+            {
+                yield return
+                 new ValidationResult("Data Final tem de ser igual ao ano em vigor");
             }
         }
     }

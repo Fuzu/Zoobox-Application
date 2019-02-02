@@ -1851,6 +1851,9 @@
     <Content Update="Areas\Identity\Pages\Account\Registar.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Home\Payment.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Home\_DashboardJobs.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

@@ -79,6 +79,49 @@ namespace ZooboxApplication.Controllers
             return View(model);
         }
 
+        public class PaymentModel
+        {
+            public string stripeTokenType { get; set; }
+            public string stripeToken { get; set; }
+            public string stripeEmail { get; set; }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Payment(int id, [Bind("stripeTokenType, stripeToken, stripeEmail")]PaymentModel model)
+        {
+            // Set your secret key: remember to change this to your live secret key in production
+            // See your keys here: https://dashboard.stripe.com/account/apikeys
+            StripeConfiguration.SetApiKey("sk_test_tjnJtycE4g8eavRpdGYvQiHc");
+
+            var donation = _context.Donation.Find(id);
+
+            // Token is created using Checkout or Elements!
+            // Get the payment token submitted by the form:
+            var token = (string) model.stripeToken; // Using ASP.NET MVC
+
+            var options = new ChargeCreateOptions
+            {
+                Amount = Convert.ToInt32(donation.Quantity+"00"),
+                Currency = "eur",
+                Description = donation.Description,
+                SourceId = token,
+            };
+            var service = new ChargeService();
+            Charge charge = service.Create(options);
+            if(charge.Status == "succeeded")
+            {
+                donation.Status = "success";
+            }
+            else
+            {
+                donation.Status = "reject";
+            }
+            _context.Donation.Update(donation);
+            _context.SaveChangesAsync();
+            return Redirect("/");
+        }
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Gets the about. </summary>
         ///

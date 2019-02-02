@@ -27,7 +27,7 @@
 <div class="row">
     <div class="col-md-3">
         <br />
-        <h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">Informações</h5>
+        <h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">KPI's</h5>
         <section class="panel panel-featured-left panel-featured-primary">
             <div class="panel-body">
                 <div class="widget-summary">
@@ -253,7 +253,7 @@
                                     <td>
                                         @if (item.Status == "pending")
                                         {
-                                            <form action="Home/Payment/@item.Id" method="POST">
+                                            @*<form action="Home/Payment" method="POST">*@
                                                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                                         data-key="pk_test_P3oZe3UmvYIrsktFKw6VWAf2"
                                                         data-amount="@Html.DisplayFor(modelItem => item.Quantity)00"
@@ -263,7 +263,7 @@
                                                         data-locale="en"
                                                         data-currency="eur">
                                                 </script>
-                                            </form>
+                                            @*</form>*@
 
                                         }
                                     </td>

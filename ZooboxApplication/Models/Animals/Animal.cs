@@ -12,6 +12,7 @@ namespace ZooboxApplication.Models
 {
     public class Animal
     {
+        
         public int Id { get; set; }
 
         [Display(Name = "Nome")]
@@ -31,7 +32,7 @@ namespace ZooboxApplication.Models
         [Display(Name = "Doença")]
         public virtual DiseaseAnimal DiseaseName { get; set; }
 
-
+        [Range(typeof(DateTime), "1/1/1966", "1/1/2020")]
         [DisplayFormat(DataFormatString = "{0:d}")]
         [Display(Name = "Data Entrada")]
         public DateTime EntranceDay { get; set; }
@@ -54,7 +55,17 @@ namespace ZooboxApplication.Models
         public  IFormFile Image { get; set; }
 
 
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
 
+         
+            if (EntranceDay.Year > DateTime.Now.Year)
+            {
+                yield return
+                 new ValidationResult("Data tem de ser igual ao ano em vigor");
+            }
+     
+        }
 
 
 
