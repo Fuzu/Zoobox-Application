@@ -50,9 +50,9 @@ namespace ZooboxApplication.Controllers.Adoptions
         // GET: Adoptions/Create
         public IActionResult Create()
         {
-            ViewData["AdoptionType"] = new SelectList(_context.AdoptionType, "Id", "Id");
-            ViewData["Animal"] = new SelectList(_context.Animal, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id");
+            ViewData["AdoptionType"] = new SelectList(_context.AdoptionType, "Id", "AdoptionTypeName");
+            ViewData["Animal"] = new SelectList(_context.Animal, "Id", "Name");
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Email");
             return View();
         }
 
@@ -69,9 +69,9 @@ namespace ZooboxApplication.Controllers.Adoptions
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AdoptionType"] = new SelectList(_context.AdoptionType, "Id", "Id", adoption.AdoptionType);
-            ViewData["Animal"] = new SelectList(_context.Animal, "Id", "Id", adoption.Animal);
-            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id", adoption.UserId);
+            ViewData["AdoptionType"] = new SelectList(_context.AdoptionType, "Id", "AdoptionTypeName", adoption.AdoptionType);
+            ViewData["Animal"] = new SelectList(_context.Animal, "Id", "Name", adoption.Animal);
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Email", adoption.UserId);
             return View(adoption);
         }
 

@@ -17,6 +17,7 @@ using ZooboxApplication.Data;
 
 using Microsoft.EntityFrameworkCore;
 using Stripe;
+using ZooboxApplication.Models.Donations;
 
 namespace ZooboxApplication.Controllers
 {
@@ -52,6 +53,14 @@ namespace ZooboxApplication.Controllers
           
             var Jobs = _context.Job.Include(j => j.ApplicationUser).Where(s => s.State.Equals("Activo"));
             var Payments = _context.Donation.Include(j => j.ApplicationUser);
+            var DonationAmount = _context.Donation.Include(j => j.ApplicationUser).Where(s => s.Status.Equals("success"));
+
+            double sumDonations = 0;
+            foreach (Donation item in DonationAmount)
+            {
+                sumDonations += int.Parse(item.Quantity);
+            }
+
 
             var animals = from m in _context.Animal
                           select m;

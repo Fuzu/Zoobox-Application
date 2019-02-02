@@ -11,7 +11,7 @@ namespace ZooboxApplication.Models.Adoptions
     {
         public int Id { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DataType(DataType.Date)]
         [Display(Name = "Data")]
         public DateTime AdoptionDate { get; set; }
 
