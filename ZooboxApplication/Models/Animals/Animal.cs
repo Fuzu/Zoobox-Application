@@ -54,6 +54,10 @@ namespace ZooboxApplication.Models
         [Display(Name = "Imagem")]
         public  IFormFile Image { get; set; }
 
+        [Display(Name = "Historias")]
+        public List<Story> Stories{ get; set; }
+
+
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

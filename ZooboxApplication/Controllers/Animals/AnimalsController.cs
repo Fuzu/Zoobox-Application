@@ -14,6 +14,7 @@ using ZooboxApplication.Models.ViewModel;
 
 namespace ZooboxApplication.Controllers.Animals
 {
+   
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>   Controlador de páginas Animais. </summary>
     ///
@@ -23,11 +24,14 @@ namespace ZooboxApplication.Controllers.Animals
     public class AnimalsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IViewRenderService _viewRenderService;
         private readonly IHostingEnvironment _env;
-        public AnimalsController(ApplicationDbContext context, IHostingEnvironment env)
+        public AnimalsController(ApplicationDbContext context, IHostingEnvironment env, IViewRenderService viewRenderService)
         {
             _context = context;
             _env = env;
+
+            _viewRenderService = viewRenderService;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,6 +100,24 @@ namespace ZooboxApplication.Controllers.Animals
             return View(animal);
         }
 
+        public async Task<JsonResult> Stories(int? id)
+        {
+            if (id == null)
+            {
+                return Json(new ResultJson() { Status = 0 });
+            }
+
+            var animal = await _context.Animal.FirstOrDefaultAsync(m => m.Id == id);
+            animal.Stories = _context.Story.Where(a => a.AnimalId == animal.Id).OrderByDescending(a => a.Created).ToList();
+            if (animal == null)
+            {
+                return Json(new ResultJson() { Status = 0 });
+            }
+            var view = await _viewRenderService.RenderToStringAsync("Animals/Stories", animal);
+            
+
+            return Json(new ResultJson() { Status = 1 , Object = view });
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Detalhes de um Animal </summary>
@@ -158,6 +180,7 @@ namespace ZooboxApplication.Controllers.Animals
             ViewData["Disease"] = new SelectList(_context.DiseaseAnimal, "Id", "DiseaseName", animal.Disease);
             ViewData["Race"] = new SelectList(_context.Race, "Id", "RaceName", animal.Race);
             ViewData["State"] = new SelectList(_context.State, "Id", "StateName", animal.State);
+            animal.Stories = _context.Story.Where(a => a.AnimalId == animal.Id).OrderByDescending(a => a.Created).ToList();
             return View(animal);
         }
 

@@ -1,8 +1,13 @@
 ﻿@model ZooboxApplication.Models.Animal
 
+
 @{
+ 
     ViewData["Title"] = "Editar - Animal";
 }
+
+
+
 
 <div class="row">
     <div class="col-md-4">
@@ -24,7 +29,7 @@
                         </div>
                     </div>
                     <div class="col-md-4" style="margin-top: 140px">
-                        <button type="button" class="mb-xs mt-xs mr-xs btn btn-danger" id="deleteImage" ><i class="fa fa-trash-o"></i> Eliminar</button>
+                        <button type="button" class="mb-xs mt-xs mr-xs btn btn-danger" id="deleteImage"><i class="fa fa-trash-o"></i> Eliminar</button>
                     </div>
                 </div>
 
@@ -88,22 +93,106 @@
             </div>
         </form>
     </div>
-</div>
+    <div class="col-md-6 pull-right">
+        <div class="form-group">
+            <label class="control-label" for=Title">Crie uma nova História</label>
+            <input class="form-control" type="text" id="Title" name="Title" value="">
+        </div>
+        <textarea class="input-block-level" id="summernote" name="content" rows="18">
+					</textarea>
+        
+        @*<div class="summernote" data-plugin-summernote data-plugin-options='{ "height": 200, "codemirror": { "theme": "ambiance" } }'></div>*@
+        <input type="submit" id="submitStory" value="Guardar" class="btn btn-default pull-right" />
+
+        @await Html.PartialAsync("Stories")
+
+    </div>
+        </div>
 
 <div>
     <a asp-action="Index">Voltar a listagem</a>
 </div>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+{
+    @Html.AntiForgeryToken()
+}
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
     <script>
         $(document).ready(function () {
-            $("#deleteImage").on('click', function() {
+
+            $('#summernote').summernote({
+                height: "400px",
+                minHeight: null,           
+                maxHeight: null,
+                tabsize: 2,
+               
+            });
+
+             $("#submitStory").on("click", function () {
+             var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            $.ajax({
+                url: "/Stories/Create",
+                type: "POST",
+                data: {
+                    __RequestVerificationToken: token,
+                    Title: $('#Title').val(),
+                    Description: $('#summernote').code(),
+                    AnimalId: @Model.Id,
+                },
+                beforeSend: function () {
+                    $("#loading").addClass("loading");
+                },
+                success: function (response) {
+                    if (response.status == 1) {
+                        RefreshStories();
+                        $('#Title').val("");
+                        $('#summernote').code('');
+                    } else {
+
+                    }
+                    $("#loading").removeClass("loading");
+                },
+                error: function () {
+                    $("#loading").removeClass("loading");
+                }
+            })
+            });
+
+            function RefreshStories() {
+             
+         
+            $.ajax({
+                url: "/Animals/Stories/@Model.Id",
+                type: "GET",
+               
+                beforeSend: function () {
+                    $("#loading").addClass("loading");
+                },
+                success: function (response) {
+                    if (response.status == 1) {
+                        $("#stories").html(response.object);
+                    } else {
+
+                    }
+                    $("#loading").removeClass("loading");
+                },
+                error: function () {
+                    console.log("erro");
+                }
+            })
+            }
+
+            $("#deleteImage").on('click', function () {
                 $("#ImageFile").val("")
                 $("#deleteImage").html('<i class="fa fa-trash-o"></i> Eliminado');
                 $("#deleteImage").attr("disabled", true);
             });
         });
     </script>
-    
+
 }

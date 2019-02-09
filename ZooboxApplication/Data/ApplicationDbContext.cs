@@ -29,6 +29,8 @@ namespace ZooboxApplication.Data
         public DbSet<ZooboxApplication.Models.Donations.Donation> Donation { get; set; }
         public DbSet<ZooboxApplication.Models.Adoptions.AdoptionType> AdoptionType { get; set; }
         public DbSet<ZooboxApplication.Models.Adoptions.Adoption> Adoption { get; set; }
+        public DbSet<ZooboxApplication.Models.Animals.Story> Story { get; set; }
+        public DbSet<ZooboxApplication.Models.Animals.Sponsorship> Sponsorship { get; set; }
         //public DbSet<ZooboxApplication.Models.UserCustom> UserList { get; set; }
     }
 }

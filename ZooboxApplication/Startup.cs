@@ -94,6 +94,7 @@ namespace ZooboxApplication
                 options.LogoutPath = $"/Identity/Account/Logout";
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
+            services.AddScoped<IViewRenderService, ViewRenderService>();
 
             // using Microsoft.AspNetCore.Identity.UI.Services;
             services.AddSingleton<IEmailSender, EmailSender>();
