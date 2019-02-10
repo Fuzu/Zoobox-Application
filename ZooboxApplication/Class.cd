@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Alphabetical">
+  <Class Name="ZooboxApplication.Models.ApplicationUser">
+    <Position X="9.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAACAEAAARAQAAAIQABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\ApplicationUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZooboxApplication.Models.Animal">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <AssociationLine Name="RaceName" Type="ZooboxApplication.Models.Race" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="16.812" Y="3.334" />
+        <Point X="16.812" Y="5.503" />
+        <Point X="18.25" Y="5.503" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Statename" Type="ZooboxApplication.Models.State" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="15.688" Y="3.334" />
+        <Point X="15.688" Y="6.148" />
+        <Point X="15.5" Y="6.148" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>wAACAACEAACEAEAAAAIAAAQAAAAAABAAAAAABAEAAAA=</HashCode>
+      <FileName>Models\Animals\Animal.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="RaceName" />
+      <Property Name="Statename" />
+      <Property Name="DiseaseName" />
+      <Property Name="Stories" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ZooboxApplication.Models.Job">
+    <Position X="4" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAREAACgAAAQAAAAAAgAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Models\Animals\Jobs.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ApplicationUser" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ZooboxApplication.Models.Race">
+    <Position X="18.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Animals\Race.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZooboxApplication.Models.State">
+    <Position X="14" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Models\Animals\State.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZooboxApplication.Models.JobView">
+    <Position X="4" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Models\ViewModel\JobsView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZooboxApplication.Models.ViewRenderService" BaseTypeListCollapsed="true">
+    <Position X="4" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAADAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Models\RenderToService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ZooboxApplication.Models.Adoptions.Adoption">
+    <Position X="11.25" Y="5.5" Width="1.75" />
+    <AssociationLine Name="AnimalName" Type="ZooboxApplication.Models.Animal" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.75" Y="5.5" />
+        <Point X="12.75" Y="4.315" />
+        <Point X="14.75" Y="4.315" />
+        <Point X="14.75" Y="2.314" />
+        <Point X="15.5" Y="2.314" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="ApplicationUser" Type="ZooboxApplication.Models.ApplicationUser" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.25" Y="5.5" />
+        <Point X="12.25" Y="3.625" />
+        <Point X="11" Y="3.625" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAQAAAAAAgAAAAAAAAAoAAAAiAAAAg=</HashCode>
+      <FileName>Models\Adoptions\Adoption.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AdoptionTypeName" />
+      <Property Name="AnimalName" />
+      <Property Name="ApplicationUser" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ZooboxApplication.Models.Adoptions.AdoptionType">
+    <Position X="11.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Models\Adoptions\AdoptionType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZooboxApplication.Models.Animals.DiseaseAnimal">
+    <Position X="18.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Animals\DiseaseAnimal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZooboxApplication.Models.Animals.Sponsorship">
+    <Position X="9" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEAABAAEAQAAAAAAgAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Models\Animals\Sponsorship.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ApplicationUser" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ZooboxApplication.Models.Animals.Story">
+    <Position X="13" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAgAAABgAEAQAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Animals\Story.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ApplicationUser" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ZooboxApplication.Models.Animals.DonationType">
+    <Position X="6.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Models\Donations\DonationType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZooboxApplication.Models.Donations.Donation">
+    <Position X="6.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEAAAgAAAQAAAAAAgAAAAAAAAAAAQAwAAAAAA=</HashCode>
+      <FileName>Models\Donations\Donation.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DonationTypeName" />
+      <Property Name="ApplicationUser" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Collections.Generic.List&lt;T&gt;" Collapsed="true">
+    <Position X="13" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="ZooboxApplication.Models.IViewRenderService" Collapsed="true">
+    <Position X="4" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\RenderToService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

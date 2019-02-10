@@ -34,7 +34,7 @@ namespace ZooboxApplication.Controllers
 
 
         // GET: Jobs/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -43,7 +43,7 @@ namespace ZooboxApplication.Controllers
 
             var job = await _context.Job
                 .Include(j => j.ApplicationUser)
-                .FirstOrDefaultAsync(m => m.UserId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (job == null)
             {
                 return NotFound();
@@ -51,6 +51,7 @@ namespace ZooboxApplication.Controllers
 
             return View(job);
         }
+
 
         // GET: Jobs/Create
         public IActionResult Create()

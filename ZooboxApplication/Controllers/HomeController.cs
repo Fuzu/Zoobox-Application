@@ -37,12 +37,13 @@ namespace ZooboxApplication.Controllers
         /// <returns>   Retorna a view da página se o utilizador estiver logado. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         ///
-
+        public UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
 
         public HomeController(UserManager<ApplicationUser> userManager, ApplicationDbContext context, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
+            _userManager = userManager;
             //ApplicationSeed seed = new ApplicationSeed(context, userManager, roleManager);
             //seed.Users().Wait();
             //seed.Animals().Wait();
@@ -54,11 +55,12 @@ namespace ZooboxApplication.Controllers
 
             // GET: Jobs
           
+            var user = await _userManager.GetUserAsync(HttpContext.User);
             var Jobs = _context.Job.Include(j => j.ApplicationUser).Where(s => s.State.Equals("Activo"));
             var Payments = _context.Donation.Include(j => j.ApplicationUser);
             var DonationAmountMoney = _context.Donation.Include(j => j.ApplicationUser).Where(s => s.DonationType.Equals(1)).Where(s => s.Status.Equals("success"));
             var DonationsAmountKG = _context.Donation.Include(j => j.ApplicationUser).Where(s => s.DonationType.Equals(2002));
-
+            var Follow = _context.Sponsorship.Where(j => j.UserId == user.Id).Where(s => s.Status.Equals("Seguir"));
             double sumDonations = 0;
             if (DonationAmountMoney != null)
             {
@@ -82,10 +84,12 @@ namespace ZooboxApplication.Controllers
                 ViewBag.DonationAmount = sumDonations;
                 ViewBag.sumDonationsKG = sumDonationsKG;
             }
+
             var model = new List<Object>
             {
                  await Jobs.ToListAsync(),
                  await Payments.ToListAsync(),
+                 await Follow.ToListAsync(),
             };
             
      

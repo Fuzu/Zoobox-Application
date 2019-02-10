@@ -24,7 +24,7 @@ namespace ZooboxApplication.Models.Animals
         [ForeignKey("Animal")]
         public int AnimalId { get; set; }
 
-        [Display(Name = "Utilizador")]
+        [Display(Name = "Animal")]
         public virtual Animal Animal { get; set; }
     }
 }

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ZooboxApplication.Data;
+using ZooboxApplication.Models;
 using ZooboxApplication.Models.Animals;
 
 namespace ZooboxApplication.Controllers.Animals
@@ -13,11 +15,13 @@ namespace ZooboxApplication.Controllers.Animals
     public class SponsorshipsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private UserManager<ApplicationUser> _userManager;
 
-        public SponsorshipsController(ApplicationDbContext context)
+        public SponsorshipsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
-        }
+            _userManager = userManager;
+        }   
 
         // GET: Sponsorships
         public async Task<IActionResult> Index()
@@ -70,6 +74,24 @@ namespace ZooboxApplication.Controllers.Animals
             ViewData["AnimalId"] = new SelectList(_context.Animal, "Id", "Id", sponsorship.AnimalId);
             ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id", sponsorship.UserId);
             return View(sponsorship);
+        }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> AjaxCreate(int id, [Bind("Id,Status,Title,UserId,AnimalId")] Sponsorship sponsorship)
+        {
+          
+            var user = await GetCurrentUserAsync();
+            sponsorship.UserId = user.Id;
+            if (ModelState.IsValid)
+            {
+                _context.Add(sponsorship);
+                await _context.SaveChangesAsync();
+                return Json(new ResultJson() { Status = 1, Object = sponsorship });
+            }
+
+            return Json(new ResultJson() { Status = 0 });
         }
 
         // GET: Sponsorships/Edit/5

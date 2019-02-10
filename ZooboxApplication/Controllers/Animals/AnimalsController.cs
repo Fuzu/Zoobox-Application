@@ -113,6 +113,9 @@ namespace ZooboxApplication.Controllers.Animals
             {
                 return Json(new ResultJson() { Status = 0 });
             }
+
+            animal.RaceName = _context.Race.Find(animal.Race);
+            animal.Statename = _context.State.Find(animal.State);
             var view = new string("");
             if (_viewRenderService != null)
             {

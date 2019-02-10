@@ -4,15 +4,33 @@
 {   <div id="stories">
     <div class="clearfix"></div>
     <div class="col-12">
+
         <section class="panel">
             <header class="panel-heading panel-heading-transparent">
                 <div class="panel-actions">
-                    <a href="#" class="fa fa-caret-down"></a>
-                    <a href="#" class="fa fa-times"></a>
+                    
+                </div>
+                <div class="widget-profile-info">
+                    <div class="profile-picture">
+                        @if (Model.ImageFile != null)
+                        {
+                            <img src="@Model.ImageFile" alt="Joseph Doe" class="img-circle" data-lock-picture="@Model.ImageFile" />
+                        }
+                        else
+                        {
+                            <img src="~/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="~/images/!logged-user.jpg" />
+                        }
+                    </div>
+                    <div class="profile-info  ">
+                        <h4 class="name text-semibold">@Model.Name</h4>
+                        <h5 class="role"> @Model.RaceName.RaceName </h5>
+                        <h6 class="role"> @Model.Statename.StateName </h6>
+
+                    </div>
                 </div>
             </header>
             <div class="panel-body">
-                <div class="timeline timeline-simple mt-xlg mb-md">
+                <div class="timeline timeline-simple">
                     <div class="tm-body">
                         <div class="tm-title">
                             <h3 class="h5 ">Histórias</h3>
@@ -23,8 +41,12 @@
                                 <li>
                                     <div class="tm-box">
                                         <p class="text-muted mb-none">@story.Created - @story.Title</p>
-                                        @Html.Raw(@story.Description)
-                                    </div>
+                                        
+                                            <div class="image-responsive">
+                                                @Html.Raw(@story.Description)
+                                            </div>
+                                        
+                                        </div>
                                 </li>
                             }
                         </ol>
