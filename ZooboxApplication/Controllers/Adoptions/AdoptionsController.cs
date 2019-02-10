@@ -12,6 +12,11 @@ using ZooboxApplication.Models.Adoptions;
 
 namespace ZooboxApplication.Controllers.Adoptions
 {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   Controlador de páginas Adoções. </summary>
+    ///
+    /// <remarks>   André Silva, 09/12/2018. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     [Authorize]
     public class AdoptionsController : Controller
     {
@@ -22,14 +27,27 @@ namespace ZooboxApplication.Controllers.Adoptions
             _context = context;
         }
 
-        // GET: Adoptions
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Página Adoções </summary>
+        ///
+        /// <remarks>   André Silva, 09/12/2018. </remarks>
+        ///
+        /// <returns>   Retorna a view da página Adoções, com uma lista das Adoções registados na Base de dados. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Adoption.Include(a => a.AdoptionTypeName).Include(a => a.AnimalName).Include(a => a.ApplicationUser);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Adoptions/Details/5
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Detalhes de uma Adoção </summary>
+        ///
+        /// <remarks>   André Silva, 09/12/2018. </remarks>
+        ///
+        /// <param name="id"> - Id da Adoção</param>
+        /// <returns>   Retorna uma view com os detalhes de uma Adoção, Caso contrário devolve Not Found</returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -50,7 +68,13 @@ namespace ZooboxApplication.Controllers.Adoptions
             return View(adoption);
         }
 
-        // GET: Adoptions/Create
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Detalhes de uma Adoção </summary>
+        ///
+        /// <remarks>   André Silva, 09/12/2018. </remarks>
+        ///
+        /// <returns>   Retorna uma view com um formulário de inserção de uma Adoção</returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public IActionResult Create()
         {
             ViewData["AdoptionType"] = new SelectList(_context.AdoptionType, "Id", "AdoptionTypeName");
@@ -59,9 +83,17 @@ namespace ZooboxApplication.Controllers.Adoptions
             return View();
         }
 
-        // POST: Adoptions/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> POST:Create, endpoint para criar uma Adoção recebemdo todos os argumentos necessarios. </summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="Id"> - id da Adoção </param>
+        /// <param name="AdoptionDate"> - Data da adoçao </param>
+        /// <param name="Animal"> Animal que vai ser adotado</param>
+        /// <param name="UserId">  utilizador a adotar o animal</param>
+        /// <param name="AdoptionType">  Tipo de Adoção </param>
+        /// <returns>   Retorna um view com os Detalhes da nova Adoção  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,AdoptionDate,Animal,UserId,AdoptionType")] Adoption adoption)
@@ -96,7 +128,14 @@ namespace ZooboxApplication.Controllers.Adoptions
             return View(adoption);
         }
 
-        // GET: Adoptions/Edit/5
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> GET:Edit, endpoint para procurar a informação e devolve de uma Adoção para que se possa editar.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="Id"> - id da Adoção </param>
+        /// <returns>   Retorna um view com o formulario preenchido para editar.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -115,9 +154,16 @@ namespace ZooboxApplication.Controllers.Adoptions
             return View(adoption);
         }
 
-        // POST: Adoptions/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> POST:Edit, endpoint que recebe a informação relativa a uma Adoção e edit essa Adoção.</summary>
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="Id"> - id da Adoção </param>
+        /// <param name="AdoptionDate"> - Data da adoçao </param>
+        /// <param name="Animal"> Animal que vai ser adotado</param>
+        /// <param name="UserId">  utilizador a adotar o animal</param>
+        /// <param name="AdoptionType">  Tipo de Adoção </param>
+        /// <returns>   Retorna uma view com a Adoção editado.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,AdoptionDate,Animal,UserId,AdoptionType")] Adoption adoption)
@@ -161,7 +207,13 @@ namespace ZooboxApplication.Controllers.Adoptions
             return View(adoption);
         }
 
-        // GET: Adoptions/Delete/5
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> GET:Delete, recebe um id de uma Adoção e devolve um view com a informação do mesmo e a opção para apagar.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="id"> - id da Adoção </param>
+        /// <returns>   Retorna uma view com a Adoção.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -182,7 +234,13 @@ namespace ZooboxApplication.Controllers.Adoptions
             return View(adoption);
         }
 
-        // POST: Adoptions/Delete/5
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> Delete, recebe um id de uma Adoção e apaga essa Adoção.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="id"> - id da Adoção </param>
+        /// <returns>   Retorna o index das Adoções.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -192,7 +250,13 @@ namespace ZooboxApplication.Controllers.Adoptions
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> Verifica se uma Adoção existe.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="Id"> - id da Adoção </param>
+        /// <returns>   Retorna true ou false  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private bool AdoptionExists(int id)
         {
             return _context.Adoption.Any(e => e.Id == id);

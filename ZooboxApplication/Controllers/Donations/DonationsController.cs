@@ -10,6 +10,11 @@ using ZooboxApplication.Models.Donations;
 
 namespace ZooboxApplication.Controllers.Donations
 {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   Controlador de páginas Doações. </summary>
+    ///
+    /// <remarks>   André Silva, 09/12/2018. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     public class DonationsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,14 +24,27 @@ namespace ZooboxApplication.Controllers.Donations
             _context = context;
         }
 
-        // GET: Donations
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Página Doações </summary>
+        ///
+        /// <remarks>   André Silva, 09/12/2018. </remarks>
+        ///
+        /// <returns>   Retorna a view da página Doações, com uma lista das Doações registados na Base de dados. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Donation.Include(d => d.ApplicationUser).Include(d => d.DonationTypeName);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Donations/Details/5
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Detalhes de uma Doação </summary>
+        ///
+        /// <remarks>   André Silva, 09/12/2018. </remarks>
+        ///
+        /// <param name="id"> - Id da Doação</param>
+        /// <returns>   Retorna uma view com os detalhes de uma Doação, Caso contrário devolve Not Found</returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,7 +64,13 @@ namespace ZooboxApplication.Controllers.Donations
             return View(donation);
         }
 
-        // GET: Donations/Create
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Detalhes de uma Doação </summary>
+        ///
+        /// <remarks>   André Silva, 09/12/2018. </remarks>
+        ///
+        /// <returns>   Retorna uma view com um formulário de inserção de uma Doação</returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public IActionResult Create()
         {
             ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Email");
@@ -54,9 +78,18 @@ namespace ZooboxApplication.Controllers.Donations
             return View();
         }
 
-        // POST: Donations/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> POST:Create, endpoint para criar uma Doação recebemdo todos os argumentos necessarios. </summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="Id"> - id da doaçao </param>
+        /// <param name="DonationType"> - tipo de doação da doação </param>
+        /// <param name="Description"> - descrição da doação </param>
+        /// <param name="Status"> - estado da doação </param>
+        /// <param name="Quantity"> - quantidade doada da doação </param>
+        /// <param name="UserId"> - id do utilizador da doação </param>      
+        /// <returns>   Retorna um view com os Detalhes da nova Doação  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,DonationType,Description,Status,Quantity,UserId")] Donation donation)
@@ -72,7 +105,13 @@ namespace ZooboxApplication.Controllers.Donations
             return View(donation);
         }
 
-        // GET: Donations/Edit/5
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> GET:Edit, endpoint para procurar a informação e devolve de uma Doação para que se possa editar.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="Id"> - id da Doação </param>
+        /// <returns>   Retorna um view com o formulario preenchido para editar.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -90,9 +129,18 @@ namespace ZooboxApplication.Controllers.Donations
             return View(donation);
         }
 
-        // POST: Donations/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> POST:Edit, endpoint que recebe a informação relativa a uma Doação e edit essa Doação.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="Id"> - id da doaçao </param>
+        /// <param name="DonationType"> - tipo de doação da doação </param>
+        /// <param name="Description"> - descrição da doação </param>
+        /// <param name="Status"> - estado da doação </param>
+        /// <param name="Quantity"> - quantidade doada da doação </param>
+        /// <param name="UserId"> - id do utilizador da doação </param>      
+        /// <returns>   Retorna uma view com a Doação editado.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,DonationType,Description,Status,Quantity,UserId")] Donation donation)
@@ -127,7 +175,13 @@ namespace ZooboxApplication.Controllers.Donations
             return View(donation);
         }
 
-        // GET: Donations/Delete/5
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> GET:Delete, recebe um id de uma Doação e devolve um view com a informação do mesmo e a opção para apagar.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="id"> - id da Doação </param>
+        /// <returns>   Retorna uma view com a Doação.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -147,7 +201,13 @@ namespace ZooboxApplication.Controllers.Donations
             return View(donation);
         }
 
-        // POST: Donations/Delete/5
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> Delete, recebe um id de uma Doação e apaga essa Doação.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="id"> - id da Doação </param>
+        /// <returns>   Retorna o index das Doações.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -157,7 +217,13 @@ namespace ZooboxApplication.Controllers.Donations
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> Verifica se uma Doação existe.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="Id"> - id da Doação </param>
+        /// <returns>   Retorna true ou false  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private bool DonationExists(int id)
         {
             return _context.Donation.Any(e => e.Id == id);

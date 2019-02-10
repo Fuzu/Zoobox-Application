@@ -11,7 +11,12 @@ using ZooboxApplication.Models;
 using ZooboxApplication.Models.Animals;
 
 namespace ZooboxApplication.Controllers.Animals
-{
+{   
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   Controlador de páginas Apadrinhamentos. </summary>
+    ///
+    /// <remarks>   André Silva, 09/12/2018. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     public class SponsorshipsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -23,14 +28,26 @@ namespace ZooboxApplication.Controllers.Animals
             _userManager = userManager;
         }   
 
-        // GET: Sponsorships
+                ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Página Apadrinhamentos </summary>
+        ///
+        /// <remarks>   André Silva, 09/12/2018. </remarks>
+        ///
+        /// <returns>   Retorna a view da página Apadrinhamentos, com uma lista dos Apadrinhamentos registados na Base de dados. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Sponsorship.Include(s => s.Animal).Include(s => s.ApplicationUser);
             return View(await applicationDbContext.ToListAsync());
         }
-
-        // GET: Sponsorships/Details/5
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Detalhes de um Apadrinhamento </summary>
+        ///
+        /// <remarks>   André Silva, 09/12/2018. </remarks>
+        ///
+        /// <param name="id"> - Id do Apadrinhamento</param>
+        /// <returns>   Retorna uma view com os detalhes de um Apadrinhamento, Caso contrário devolve Not Found</returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -50,7 +67,13 @@ namespace ZooboxApplication.Controllers.Animals
             return View(sponsorship);
         }
 
-        // GET: Sponsorships/Create
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Detalhes de um Apadrinhamento </summary>
+        ///
+        /// <remarks>   André Silva, 09/12/2018. </remarks>
+        ///
+        /// <returns>   Retorna uma view com um formulário de inserção de um Apadrinhamento</returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public IActionResult Create()
         {
             ViewData["AnimalId"] = new SelectList(_context.Animal, "Id", "Id");
@@ -58,9 +81,18 @@ namespace ZooboxApplication.Controllers.Animals
             return View();
         }
 
-        // POST: Sponsorships/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+                ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> POST:Create, endpoint para criar um Apadrinhamento recebemdo todos os argumentos necessarios. </summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="Id"> - id do Apadrinhamento </param>
+        /// <parma name="Status"> - Status dos Apadrinhamentos </param>
+        /// <parma name="Title"> - Title dos Apadrinhamentos </param>
+        /// <parma name="UserId"> - UserId dos Apadrinhamentos </param>
+        /// <parma name="AnimalId"> - AnimalId dos Apadrinhamentos </param>     
+        /// <param name="SpecieName"> - SpecieName do Apadrinhamento </param>
+        /// <returns>   Retorna um view com os Detalhes da novo Apadrinhamento  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Status,Title,UserId,AnimalId")] Sponsorship sponsorship)
@@ -95,6 +127,13 @@ namespace ZooboxApplication.Controllers.Animals
         }
 
         // GET: Sponsorships/Edit/5
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> GET:Edit, endpoint para procurar a informação e devolve de um Apadrinhamento para que se possa editar.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="Id"> - id do Apadrinhamento </param>
+        /// <returns>   Retorna um view com o formulario preenchido para editar.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -112,9 +151,18 @@ namespace ZooboxApplication.Controllers.Animals
             return View(sponsorship);
         }
 
-        // POST: Sponsorships/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> POST:Edit, endpoint que recebe a informação relativa a um Apadrinhamento e edit desse Apadrinhamento.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="Id"> - id do Apadrinhamento </param>
+        /// <parma name="Status"> - Status dos Apadrinhamentos </param>
+        /// <parma name="Title"> - Title dos Apadrinhamentos </param>
+        /// <parma name="UserId"> - UserId dos Apadrinhamentos </param>
+        /// <parma name="AnimalId"> - AnimalId dos Apadrinhamentos </param>     
+        /// <param name="SpecieName"> - SpecieName do Apadrinhamento </param>
+        /// <returns>   Retorna uma view com o Apadrinhamento editado.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Status,Title,UserId,AnimalId")] Sponsorship sponsorship)
@@ -149,7 +197,13 @@ namespace ZooboxApplication.Controllers.Animals
             return View(sponsorship);
         }
 
-        // GET: Sponsorships/Delete/5
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> GET:Delete, recebe um id de um Apadrinhamento e devolve um view com a informação do mesmo e a opção para apagar.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="id">- id do Apadrinhamento </param>
+        /// <returns>   Retorna uma view com o Apadrinhamento.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -169,7 +223,13 @@ namespace ZooboxApplication.Controllers.Animals
             return View(sponsorship);
         }
 
-        // POST: Sponsorships/Delete/5
+                ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> Delete, recebe um id de um Apadrinhamento e apaga desse Apadrinhamento.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="id"> - id do Apadrinhamento </param>
+        /// <returns>   Retorna o index das Apadrinhamentos.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -179,9 +239,15 @@ namespace ZooboxApplication.Controllers.Animals
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        private bool SponsorshipExists(int id)
-        {
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> Verifica se um Apadrinhamento existe.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="Id"> - id do Apadrinhamento </param>
+        /// <returns>   Retorna true ou false  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+       private bool SponsorshipExists(int id)
+       {
             return _context.Sponsorship.Any(e => e.Id == id);
         }
     }
