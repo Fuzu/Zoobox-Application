@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZooboxApplication.Data;
 
 namespace ZooboxApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190202155649_Story")]
+    partial class Story
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,36 +226,13 @@ namespace ZooboxApplication.Migrations
                     b.ToTable("DonationType");
                 });
 
-            modelBuilder.Entity("ZooboxApplication.Models.Animals.Sponsorship", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AnimalId");
-
-                    b.Property<string>("Status");
-
-                    b.Property<string>("Title");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AnimalId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Sponsorship");
-                });
-
             modelBuilder.Entity("ZooboxApplication.Models.Animals.Story", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AnimalId");
+                    b.Property<int?>("AnimalId");
 
                     b.Property<DateTime>("Created");
 
@@ -540,24 +519,11 @@ namespace ZooboxApplication.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ZooboxApplication.Models.Animals.Sponsorship", b =>
-                {
-                    b.HasOne("ZooboxApplication.Models.Animal", "Animal")
-                        .WithMany()
-                        .HasForeignKey("AnimalId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ZooboxApplication.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("ZooboxApplication.Models.Animals.Story", b =>
                 {
                     b.HasOne("ZooboxApplication.Models.Animal")
                         .WithMany("Stories")
-                        .HasForeignKey("AnimalId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AnimalId");
 
                     b.HasOne("ZooboxApplication.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()

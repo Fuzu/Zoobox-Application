@@ -40,9 +40,12 @@ namespace ZooboxApplication.Controllers
 
         private readonly ApplicationDbContext _context;
 
-        public HomeController(ApplicationDbContext context)
+        public HomeController(UserManager<ApplicationUser> userManager, ApplicationDbContext context, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
+            //ApplicationSeed seed = new ApplicationSeed(context, userManager, roleManager);
+            //seed.Users().Wait();
+            //seed.Animals().Wait();
         }
 
         [Authorize]

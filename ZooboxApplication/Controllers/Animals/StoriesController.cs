@@ -2,30 +2,41 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ZooboxApplication.Data;
+using ZooboxApplication.Models;
 using ZooboxApplication.Models.Animals;
 
-namespace ZooboxApplication.Controllers.Donations
+namespace ZooboxApplication.Controllers.Animals
 {
-    public class DonationTypesController : Controller
+    class ResultJson
+    {
+        public int Status { get; set; }
+        public string Response { get; set; }
+        public object Object { get; set; }
+    }
+
+    public class StoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private UserManager<ApplicationUser> _userManager;
 
-        public DonationTypesController(ApplicationDbContext context, Microsoft.AspNetCore.Identity.UI.Services.IEmailSender emailSender)
+        public StoriesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        // GET: DonationTypes
-        public async Task<IActionResult> Index()
+        // GET: Stories
+        public async Task<JsonResult> Index()
         {
-            return View(await _context.DonationType.ToListAsync());
+            return Json(await _context.Story.ToListAsync());
         }
 
-        // GET: DonationTypes/Details/5
+        // GET: Stories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +44,44 @@ namespace ZooboxApplication.Controllers.Donations
                 return NotFound();
             }
 
-            var donationType = await _context.DonationType
+            var story = await _context.Story
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (donationType == null)
+            if (story == null)
             {
                 return NotFound();
             }
 
-            return View(donationType);
+            return View(story);
         }
 
-        // GET: DonationTypes/Create
+        // GET: Stories/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: DonationTypes/Create
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+        // POST: Stories/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DonationTypeName")] DonationType donationType)
+        public async Task<JsonResult> Create([Bind("Id,Title,Description,Created,CreatedByID,AnimalId")] Story story)
         {
+            story.Created = DateTime.Now;
+            var user = await GetCurrentUserAsync();
+            story.CreatedByID = user.Id;
             if (ModelState.IsValid)
             {
-                _context.Add(donationType);
+                _context.Add(story);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Json(new ResultJson() { Status = 1, Object = story });
             }
-            return View(donationType);
+            
+            return Json(new ResultJson() { Status = 0});
         }
 
-        // GET: DonationTypes/Edit/5
+        // GET: Stories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +89,22 @@ namespace ZooboxApplication.Controllers.Donations
                 return NotFound();
             }
 
-            var donationType = await _context.DonationType.FindAsync(id);
-            if (donationType == null)
+            var story = await _context.Story.FindAsync(id);
+            if (story == null)
             {
                 return NotFound();
             }
-            return View(donationType);
+            return View(story);
         }
 
-        // POST: DonationTypes/Edit/5
+        // POST: Stories/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DonationTypeName")] DonationType donationType)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Created,CreatedByID")] Story story)
         {
-            if (id != donationType.Id)
+            if (id != story.Id)
             {
                 return NotFound();
             }
@@ -97,12 +113,12 @@ namespace ZooboxApplication.Controllers.Donations
             {
                 try
                 {
-                    _context.Update(donationType);
+                    _context.Update(story);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DonationTypeExists(donationType.Id))
+                    if (!StoryExists(story.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +129,10 @@ namespace ZooboxApplication.Controllers.Donations
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(donationType);
+            return View(story);
         }
 
-        // GET: DonationTypes/Delete/5
+        // GET: Stories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +140,30 @@ namespace ZooboxApplication.Controllers.Donations
                 return NotFound();
             }
 
-            var donationType = await _context.DonationType
+            var story = await _context.Story
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (donationType == null)
+            if (story == null)
             {
                 return NotFound();
             }
 
-            return View(donationType);
+            return View(story);
         }
 
-        // POST: DonationTypes/Delete/5
+        // POST: Stories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var donationType = await _context.DonationType.FindAsync(id);
-            _context.DonationType.Remove(donationType);
+            var story = await _context.Story.FindAsync(id);
+            _context.Story.Remove(story);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DonationTypeExists(int id)
+        private bool StoryExists(int id)
         {
-            return _context.DonationType.Any(e => e.Id == id);
+            return _context.Story.Any(e => e.Id == id);
         }
     }
 }

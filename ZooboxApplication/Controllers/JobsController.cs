@@ -70,13 +70,17 @@ namespace ZooboxApplication.Controllers
             {
                 _context.Add(job);
                 await _context.SaveChangesAsync();
-                var callbackUrl = Request.Scheme +"://"+ Request.Host.Value + "/jobs/Edit/"+job.Id;
-                var email = _context.Users.Find(job.UserId).Email;
-                await _emailSender.SendEmailAsync(
-                   email,
-                   "Zoobox - Nova Tarefa",
-                   $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Por favor veja a tarefa criada.</a>.");
-                ViewData["ApplicationUsers"] = new SelectList(_context.ApplicationUser, "Id", "Email");
+                if(Request != null)
+                {
+                    var callbackUrl = Request.Scheme + "://" + Request.Host.Value + "/jobs/Edit/" + job.Id;
+                    var email = _context.Users.Find(job.UserId).Email;
+                    await _emailSender.SendEmailAsync(
+                       email,
+                       "Zoobox - Nova Tarefa",
+                       $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Por favor veja a tarefa criada.</a>.");
+                    ViewData["ApplicationUsers"] = new SelectList(_context.ApplicationUser, "Id", "Email");
+                }
+               
                 return RedirectToAction(nameof(Index));
             }
 
