@@ -218,6 +218,16 @@ namespace ZooboxApplication.Controllers.Animals
             {
                 try
                 {
+
+                    //Verificar se o animal foi associado com alguma doença, se sim alterar o seu estado actual para Doente
+                    if (animal.Disease != 1)
+                        animal.State = 6;
+                    //caso contrário colocar o estado do animal como Saudável
+                    else if (animal.Disease == 1)
+                        animal.State = 1;
+
+
+
                     _context.Update(animal);
                     await _context.SaveChangesAsync();
                 }

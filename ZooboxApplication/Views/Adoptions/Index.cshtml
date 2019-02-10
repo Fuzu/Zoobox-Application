@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Adopções<a href="#" data-toggle="tooltip" data-placement="bottom" title="Listagem de todas as Adopções realizadas na plataforma."><i class="fa fa-question-circle" aria-hidden="true"></i></a></h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Criar nova adopção</a>
 </p>
 <table class="table" id="adoptionList">
     <thead>
@@ -35,18 +35,18 @@
                     @Html.DisplayFor(modelItem => item.AdoptionDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AnimalName.Id)
+                    @Html.DisplayFor(modelItem => item.AnimalName.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
+                    @Html.DisplayFor(modelItem => item.ApplicationUser.Email)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AdoptionTypeName.Id)
+                    @Html.DisplayFor(modelItem => item.AdoptionTypeName.AdoptionTypeName)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id"><span class="glyphicon glyphicon-pencil"></span></a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id"><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
             </tr>
         }

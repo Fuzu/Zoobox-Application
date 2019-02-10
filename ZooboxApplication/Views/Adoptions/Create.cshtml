@@ -1,12 +1,11 @@
 ﻿@model ZooboxApplication.Models.Adoptions.Adoption
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Nova adopção";
 }
 
-<h2>Create</h2>
+<h2>Nova adopção<a href="#" data-toggle="tooltip" data-placement="bottom" title="Formulário para criar a adoção, somente preencher e submter o formulário"><i class="fa fa-question-circle" aria-hidden="true"></i></a></h2></h2>
 
-<h4>Adoption</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -26,7 +25,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="AdoptionType" class="control-label"></label>
@@ -36,14 +35,14 @@
                 </a>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Guardar" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar</a>
 </div>
 
 @section Scripts {

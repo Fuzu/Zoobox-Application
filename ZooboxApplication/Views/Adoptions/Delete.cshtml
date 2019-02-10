@@ -1,12 +1,12 @@
 ﻿@model ZooboxApplication.Models.Adoptions.Adoption
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Eliminar";
 }
+@Html.ValidationSummary()
+<h2>Eliminar</h2>
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h3>Tem a certeza que pretende eliminar?</h3>
 <div>
     <h4>Adoption</h4>
     <hr />
@@ -21,25 +21,25 @@
             @Html.DisplayNameFor(model => model.AnimalName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.AnimalName.Id)
+            @Html.DisplayFor(model => model.AnimalName.Name)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.ApplicationUser)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ApplicationUser.Id)
+            @Html.DisplayFor(model => model.ApplicationUser.Email)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.AdoptionTypeName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.AdoptionTypeName.Id)
+            @Html.DisplayFor(model => model.AdoptionTypeName.AdoptionTypeName)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Eliminar" class="btn btn-default" /> |
+        <a asp-action="Index">Voltar</a>
     </form>
 </div>
