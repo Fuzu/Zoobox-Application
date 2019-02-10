@@ -33,6 +33,9 @@ namespace ZooboxApplication.Controllers
             _context = context;
             _roleManager = roleManager;
             _userManager = userManager;
+            ApplicationSeed seed = new ApplicationSeed(context, userManager, roleManager);
+            seed.Users().Wait();
+            seed.Animals().Wait();
         }
         
 

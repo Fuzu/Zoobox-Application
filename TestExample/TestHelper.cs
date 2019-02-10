@@ -25,6 +25,8 @@ namespace TestZoobox
         public UserManager<ApplicationUser> UserManager { get; }
         public RoleManager<IdentityRole> RoleManager { get; }
         public SignInManager<ApplicationUser> SignInManager { get; }
+        public IViewRenderService viewRenderService { get; }
+
         public IEmailSender IEmailSender { get; }
         public UrlEncoder UrlEncoder { get; }
 
@@ -64,14 +66,14 @@ namespace TestZoobox
             services.AddMvc();
             services.AddSingleton<IAuthenticationService, NoOpAuth>();
             services.AddLogging();
-
+            //services.AddScoped<IViewRenderService, ViewRenderService>();
             var context = new DefaultHttpContext();
             services.AddSingleton<IHttpContextAccessor>(
                 new HttpContextAccessor()
                 {
                     HttpContext = context,
                 });
-
+          
             //services.Configure<DefinicoesEmail>(config.GetSection("DefinicoesEmail"));
 
             ServiceProvider = services.BuildServiceProvider();
@@ -84,6 +86,9 @@ namespace TestZoobox
             UserManager = ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             RoleManager = ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             SignInManager = ServiceProvider.GetRequiredService<SignInManager<ApplicationUser>>();
+            viewRenderService =null;
+           
+
 
             if (popularBd)
             {

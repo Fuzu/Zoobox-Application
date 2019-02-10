@@ -10,6 +10,7 @@ namespace ZooboxApplication.Migrations
                 name: "ImageFile",
                 table: "AspNetUsers",
                 nullable: true);
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

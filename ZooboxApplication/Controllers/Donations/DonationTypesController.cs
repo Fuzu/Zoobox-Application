@@ -14,7 +14,7 @@ namespace ZooboxApplication.Controllers.Donations
     {
         private readonly ApplicationDbContext _context;
 
-        public DonationTypesController(ApplicationDbContext context)
+        public DonationTypesController(ApplicationDbContext context, Microsoft.AspNetCore.Identity.UI.Services.IEmailSender emailSender)
         {
             _context = context;
         }

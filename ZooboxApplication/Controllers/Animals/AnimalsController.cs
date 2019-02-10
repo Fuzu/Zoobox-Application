@@ -113,7 +113,12 @@ namespace ZooboxApplication.Controllers.Animals
             {
                 return Json(new ResultJson() { Status = 0 });
             }
-            var view = await _viewRenderService.RenderToStringAsync("Animals/Stories", animal);
+            var view = new string("");
+            if (_viewRenderService != null)
+            {
+                 view = await _viewRenderService.RenderToStringAsync("Animals/Stories", animal);
+            }
+            
             
 
             return Json(new ResultJson() { Status = 1 , Object = view });
@@ -142,7 +147,7 @@ namespace ZooboxApplication.Controllers.Animals
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Race,Disease,EntranceDay,Location,State,Image")] Animal animal)
         {
-            if(animal.Image != null)
+            if(animal.Image != null && _env != null)
             {
                 string path = Path.Combine(_env.WebRootPath, "images/upload/"+animal.Image.FileName);
                
@@ -198,7 +203,7 @@ namespace ZooboxApplication.Controllers.Animals
                 return NotFound();
             }
 
-            if (animal.Image != null)
+            if (animal.Image != null && _env != null)
             {
                 string path = Path.Combine(_env.WebRootPath, "images/upload/" + animal.Image.FileName);
 

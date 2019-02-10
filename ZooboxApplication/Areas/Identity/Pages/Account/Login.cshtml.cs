@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using ZooboxApplication.Models;
+using ZooboxApplication.Data;
 
 namespace ZooboxApplication.Areas.Identity.Pages.Account
 {
@@ -19,10 +20,14 @@ namespace ZooboxApplication.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager, ApplicationDbContext context, RoleManager<IdentityRole> roleManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            ApplicationSeed seed = new ApplicationSeed(context, userManager, roleManager);
+            seed.Users().Wait();
+            seed.Animals().Wait();
+            
         }
 
         [BindProperty]

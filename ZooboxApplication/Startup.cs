@@ -32,6 +32,9 @@ namespace ZooboxApplication
 
     public class Startup
     {
+
+     
+       
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Constructor. </summary>
         ///
@@ -100,6 +103,14 @@ namespace ZooboxApplication
             services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+
+            //IServiceProvider ServiceProvider = services.BuildServiceProvider();
+            //ApplicationDbContext Context = ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            //UserManager<ApplicationUser> UserManager = ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            //RoleManager<IdentityRole> RoleManager = ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+           
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
