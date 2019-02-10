@@ -77,7 +77,7 @@ namespace ZooboxApplication.Controllers.Animals
         ///
         /// <remarks>   André Silva, 09/12/2018. </remarks>
         ///
-        /// <param name="id" - Id do Animal</param>
+        /// <param name="id"> - Id do Animal</param>
         /// <returns>   Retorna uma view com os detalhes de um Animal, Caso contrário devolve Not Found</returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Details(int? id)
@@ -99,7 +99,13 @@ namespace ZooboxApplication.Controllers.Animals
 
             return View(animal);
         }
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> Procura todas as stories de um animal e devolve.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="id"> - Id do Animal</param>
+        /// <returns>   Retorna lista de stories  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<JsonResult> Stories(int? id)
         {
             if (id == null)
@@ -129,7 +135,6 @@ namespace ZooboxApplication.Controllers.Animals
         ///
         /// <remarks>   André Silva, 09/12/2018. </remarks>
         ///
-        /// <param name="id" - Id do Animal</param>
         /// <returns>   Retorna uma view com um formulário de inserção de um animal</returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         public IActionResult Create()
@@ -140,9 +145,20 @@ namespace ZooboxApplication.Controllers.Animals
             return View();
         }
 
-        // POST: Animals/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> POST:Create, endpoint para criar um Animal recebemdo todos os argumentos necessarios. </summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="Id"> - id do animal </param>
+        /// <param name="Name"> - Name do animal </param>
+        /// <param name="Race"> - Race do animal </param>
+        /// <param name="Disease"> - Disease do animal </param>
+        /// <param name="EntranceDay"> - EntranceDay do animal </param>
+        /// <param name="Location"> - Location do animal </param>
+        /// <param name="State"> - State do animal </param>
+        /// <param name="Image"> - Image do animal </param>
+        /// <returns>   Retorna um view com os Detalhes do novo Animal  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Race,Disease,EntranceDay,Location,State,Image")] Animal animal)
@@ -169,7 +185,13 @@ namespace ZooboxApplication.Controllers.Animals
             return View(animal);
         }
 
-        // GET: Animals/Edit/5
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> GET:Edit, endpoint para procurar a informação e devolve de um Animal para que se possa editar.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="Id"> - id do animal </param>
+        /// <returns>   Retorna um view com o formulario preenchido para editar.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -189,9 +211,20 @@ namespace ZooboxApplication.Controllers.Animals
             return View(animal);
         }
 
-        // POST: Animals/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> POST:Edit, endpoint que recebe a informação relativa a um Animal e edit esse Animal.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="Id"> - id do animal </param>
+        /// <param name="Name"> - Name do animal </param>
+        /// <param name="Race"> - Race do animal </param>
+        /// <param name="Disease"> - Disease do animal </param>
+        /// <param name="EntranceDay"> - EntranceDay do animal </param>
+        /// <param name="Location"> - Location do animal </param>
+        /// <param name="State"> - State do animal </param>
+        /// <param name="Image"> - Image do animal </param>
+        /// <returns>   Retorna uma view com o Animal editado.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Race,Disease,EntranceDay,Location,State,Image")] Animal animal)
@@ -250,7 +283,13 @@ namespace ZooboxApplication.Controllers.Animals
             return View(animal);
         }
 
-        // GET: Animals/Delete/5
+       ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> GET:Delete, recebe um id de um Animal e devolve um view com a informação do mesmo e a opção para apagar.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="id"> - id do animal </param>
+        /// <returns>   Retorna uma view com o Animal.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -271,7 +310,13 @@ namespace ZooboxApplication.Controllers.Animals
             return View(animal);
         }
 
-        // POST: Animals/Delete/5
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> Delete, recebe um id de um Animal e apaga esse Animal.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="id"> - id do animal </param>
+        /// <returns>   Retorna o index dos Animals.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -281,7 +326,13 @@ namespace ZooboxApplication.Controllers.Animals
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> Verifica se um animal existe.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="id"> - id do animal </param>
+        /// <returns>   Retorna true ou false  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private bool AnimalExists(int id)
         {
             return _context.Animal.Any(e => e.Id == id);
