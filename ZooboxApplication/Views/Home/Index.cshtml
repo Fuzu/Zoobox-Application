@@ -3,18 +3,19 @@
     ViewData["Title"] = "Dashboard";
 
     var roleId = UserManager.GetUserAsync(User).Result.Role;
-    if (roleId == "1")
+    if (roleId == "Administrator")
     {
         ViewData["Role"] = "Administrador";
     }
-    else if (roleId == "2")
+    else if (roleId == "Employe")
     {
         ViewData["Role"] = "Funcionário";
     }
-    else
+    else if (roleId == "Voluntary")
     {
         ViewData["Role"] = "Voluntário";
     }
+    else { ViewData["Role"] = "Cliente"; }
     var Jobs = (IEnumerable<ZooboxApplication.Models.Job>)Model[0];
     var Payments = (IEnumerable<ZooboxApplication.Models.Donations.Donation>)Model[1];
 }

@@ -34,7 +34,7 @@ namespace ZooboxApplication.Data
                 Name = "Admin User",
                 UserName = "admin@zoobox.pt",
                 Email = "admin@zoobox.pt",
-                ImageFile = "/images/upload/",
+                ImageFile = "/images/upload/user.png",
                 Role = "Administrator"
                 },
 

@@ -60,31 +60,34 @@ namespace ZooboxApplication.Controllers
             var DonationsAmountKG = _context.Donation.Include(j => j.ApplicationUser).Where(s => s.DonationType.Equals(2002));
 
             double sumDonations = 0;
-            foreach (Donation item in DonationAmountMoney)
+            if (DonationAmountMoney != null)
             {
-                sumDonations += int.Parse(item.Quantity);
-            }
-            double sumDonationsKG = 0;
-            foreach (Donation item in DonationsAmountKG)
-            {
-                sumDonationsKG += int.Parse(item.Quantity);
-            }
+                foreach (Donation item in DonationAmountMoney)
+                {
+                    sumDonations += int.Parse(item.Quantity);
+                }
+                double sumDonationsKG = 0;
+                foreach (Donation item in DonationsAmountKG)
+                {
+                    sumDonationsKG += int.Parse(item.Quantity);
+                }
 
-            var animals = from m in _context.Animal
-                          select m;
-            ViewBag.AmountAnimals   = animals.Count();
+                var animals = from m in _context.Animal
+                              select m;
+                ViewBag.AmountAnimals = animals.Count();
 
-            var users = from m in _context.Users
-                          select m;
-            ViewBag.AmountUsers = users.Count();
-            ViewBag.DonationAmount = sumDonations;
-            ViewBag.sumDonationsKG = sumDonationsKG;
+                var users = from m in _context.Users
+                            select m;
+                ViewBag.AmountUsers = users.Count();
+                ViewBag.DonationAmount = sumDonations;
+                ViewBag.sumDonationsKG = sumDonationsKG;
+            }
             var model = new List<Object>
             {
                  await Jobs.ToListAsync(),
                  await Payments.ToListAsync(),
             };
-
+            
      
             return View(model);
         }
