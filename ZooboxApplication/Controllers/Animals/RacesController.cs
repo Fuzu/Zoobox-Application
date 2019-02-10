@@ -10,7 +10,7 @@ using ZooboxApplication.Data;
 using ZooboxApplication.Models;
 
 namespace ZooboxApplication.Controllers
-{
+{   
     [Authorize]
     public class RacesController : Controller
     {
@@ -21,13 +21,27 @@ namespace ZooboxApplication.Controllers
             _context = context;
         }
 
-        // GET: Races
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Página Raças </summary>
+        ///
+        /// <remarks>   André Silva, 09/12/2018. </remarks>
+        ///
+        /// <returns>   Retorna a view da página Raças, com uma lista dos Raças registados na Base de dados. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Index()
         {
             return View(await _context.Race.ToListAsync());
         }
 
-        // GET: Races/Details/5
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Detalhes de uma Raça </summary>
+        ///
+        /// <remarks>   André Silva, 09/12/2018. </remarks>
+        ///
+        /// <param name="id">- Id da Raça</param>
+        /// <returns>   Retorna uma view com os detalhes de uma Raça, Caso contrário devolve Not Found</returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,15 +60,26 @@ namespace ZooboxApplication.Controllers
 
         }
 
-        // GET: Races/Create
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Detalhes de uma Raça </summary>
+        ///
+        /// <remarks>   André Silva, 09/12/2018. </remarks>
+        ///
+        /// <returns>   Retorna uma view com um formulário de inserção de uma Raça</returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Races/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> POST:Create, endpoint para criar uma Raça recebemdo todos os argumentos necessarios. </summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="Id"> - id da Raça </param>
+        /// <param name="RaceName"> - Nome da Raça </param>
+        /// <returns>   Retorna um view com os Detalhes do nova Raça  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,RaceName")] Race race)
@@ -68,7 +93,13 @@ namespace ZooboxApplication.Controllers
             return View(race);
         }
 
-        // GET: Races/Edit/5
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> GET:Edit, endpoint para procurar a informação e devolve de uma Raça para que se possa editar.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+       /// <param name="Id"> - id da Raça </param>
+        /// <returns>   Retorna um view com o formulario preenchido para editar.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -84,9 +115,14 @@ namespace ZooboxApplication.Controllers
             return View(race);
         }
 
-        // POST: Races/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+         ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> POST:Edit, endpoint que recebe a informação relativa a um Raça e edit esse Raça.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="id">- id da Raça </param>
+        /// <param name="RaceName"> - Nome da Raça </param>
+        /// <returns>   Retorna uma view com o Raça editado.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,RaceName")] Race race)
@@ -119,7 +155,13 @@ namespace ZooboxApplication.Controllers
             return View(race);
         }
 
-        // GET: Races/Delete/5
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> GET:Delete, recebe um id de uma Raça e devolve um view com a informação do mesmo e a opção para apagar.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="id">- id da Raça </param>
+        /// <returns>   Retorna uma view com o Raça.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,7 +179,13 @@ namespace ZooboxApplication.Controllers
             return View(race);
         }
 
-        // POST: Races/Delete/5
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> Delete, recebe um id de uma Raça e apaga esse Raça.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="id">- id da Raça </param>
+        /// <returns>   Retorna o index dos Raças.  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -147,7 +195,13 @@ namespace ZooboxApplication.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary> Verifica se uma raça existe.</summary>
+        ///
+        /// <remarks>   Tiago Alves, 10/01/2019. </remarks>
+        /// <param name="id">- id de uma Raça </param>
+        /// <returns>   Retorna true ou false  </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private bool RaceExists(int id)
         {
              return _context.Race.Any(e => e.Id == id);
