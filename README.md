@@ -1,4 +1,4 @@
-[logo]: https://zoobox.azurewebsites.net/images/logo.png
+[logo]: https://zoobox-app.azurewebsites.net/images/logo.png
 [login]: https://i.imgur.com/8cetyyC.jpg
 [createUser]: https://i.imgur.com/fJpWP6Y.jpg
 [addTypeRole]: https://i.imgur.com/wZygQ0F.jpg
@@ -41,23 +41,10 @@ Ir ao menu de navegação e `Utilizadores > Registar` se quiser mudar o tipo de um
 
 ![addTypeRole]
 
-### Funcionalidades implementadas
-#### 1º Sprint
-
-```bash
- - O sistema deverá permitir ao responsável do canil criar uma conta de utilizador. 
-
- - Deverá permitir ao responsável do canil/funcionário/voluntário editar os dados da sua conta de utilizador(username,password).  
-
- - O sistema deverá permitir ao responsável do canil/funcionário/voluntário se autenticar no sistema. 
- 
- - O sistema deverá permitir ao responsável do canil associar uma conta de utilizador a uma ficha de funcionário. 
-
- - O sistema deverá permitir ao utilizador recuperar a sua password.
 
 ```
 ####
-[Manual Técnico](https://zoobox.azurewebsites.net/help/index.html)
+[Manual Técnico](https://zoobox-app.azurewebsites.net/vsDoc/index.html)
 
 ## Grupo X
 
